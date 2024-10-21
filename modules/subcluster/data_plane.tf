@@ -7,6 +7,7 @@ resource "juju_application" "lxd" {
   charm {
     name    = "ams-lxd"
     channel = var.channel
+    base    = local.base
   }
 
   config = {

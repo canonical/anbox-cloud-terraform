@@ -7,6 +7,7 @@ resource "juju_application" "ams" {
   charm {
     name    = "ams"
     channel = var.channel
+    base    = local.base
   }
 
   units     = 1
@@ -38,6 +39,7 @@ resource "juju_application" "etcd" {
   charm {
     name    = "etcd"
     channel = "latest/stable"
+    base    = local.base
   }
 
   config = {
@@ -65,6 +67,7 @@ resource "juju_application" "etcd_ca" {
   charm {
     name    = "easyrsa"
     channel = "latest/stable"
+    base    = local.base
   }
 
   units      = 1

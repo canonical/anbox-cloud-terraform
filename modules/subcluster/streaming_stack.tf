@@ -8,6 +8,7 @@ resource "juju_application" "nats" {
   charm {
     name    = "nats"
     channel = "latest/stable"
+    base    = local.base
   }
 
   units     = 1
@@ -62,6 +63,7 @@ resource "juju_application" "dashboard" {
   charm {
     name    = "anbox-cloud-dashboard"
     channel = var.channel
+    base    = local.base
   }
 
   config = {
@@ -90,6 +92,7 @@ resource "juju_application" "agent" {
   charm {
     name    = "anbox-stream-agent"
     channel = var.channel
+    base    = local.base
   }
 
   units     = 1
@@ -118,6 +121,7 @@ resource "juju_application" "coturn" {
 
   charm {
     name = "coturn"
+    base = local.base
     // Since this is released by Anbox Charmer, this charm is release with anbox
     // releases
     channel = var.channel
@@ -144,6 +148,7 @@ resource "juju_application" "ca" {
 
   charm {
     name    = "easyrsa"
+    base    = local.base
     channel = "latest/stable"
   }
 
@@ -168,7 +173,7 @@ resource "juju_application" "lb" {
 
   charm {
     name     = "haproxy"
-    channel  = "stable"
+    channel  = "latest/stable"
     revision = 66
     // TODO: the HA proxy charm does not work well on 22.04 on ARM, so we pin
     // the revision of the charm as we currently do for our full bundle.
