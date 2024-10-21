@@ -12,7 +12,7 @@ resource "juju_application" "nats" {
   }
 
   units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  placement = one(juju_machine.streaming_stack[*].machine_id)
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -37,7 +37,7 @@ resource "juju_application" "gateway" {
   }
 
   units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  placement = one(juju_machine.streaming_stack[*].machine_id)
 
   config = {
     ua_token         = var.ua_token
@@ -73,7 +73,7 @@ resource "juju_application" "dashboard" {
   }
 
   units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  placement = one(juju_machine.streaming_stack[*].machine_id)
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -365,6 +365,7 @@ resource "juju_integration" "lb_dashboard" {
 
 
 resource "juju_machine" "streaming_stack" {
+  count       = var.deploy_streaming_stack ? 1 : 0
   model       = var.model_name
   base        = local.base
   constraints = join(" ", var.constraints)
