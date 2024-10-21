@@ -16,6 +16,7 @@ resource "juju_application" "ams" {
   config = {
     ua_token          = var.ua_token
     use_embedded_etcd = !var.external_etcd
+    snap_risk_level   = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using

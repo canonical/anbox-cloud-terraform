@@ -42,6 +42,7 @@ resource "juju_application" "gateway" {
   config = {
     ua_token         = var.ua_token
     use_insecure_tls = !var.deploy_lb
+    snap_risk_level  = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -67,7 +68,8 @@ resource "juju_application" "dashboard" {
   }
 
   config = {
-    ua_token = var.ua_token
+    ua_token        = var.ua_token
+    snap_risk_level = local.risk
   }
 
   units     = 1
@@ -99,8 +101,9 @@ resource "juju_application" "agent" {
   placement = juju_machine.control_plane.machine_id
 
   config = {
-    ua_token = var.ua_token
-    region   = "cloud-0"
+    ua_token        = var.ua_token
+    region          = "cloud-0"
+    snap_risk_level = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
