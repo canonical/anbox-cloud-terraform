@@ -6,7 +6,7 @@ on:
 
 jobs:
   cla-check:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check if Canonical's Contributor License Agreement has been signed
         uses: canonical/has-signed-canonical-cla@541d1700811d94b9f0ed9b9c4b8121260c14f3ce # v1
