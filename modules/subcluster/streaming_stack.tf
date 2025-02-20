@@ -11,8 +11,7 @@ resource "juju_application" "nats" {
     base    = local.base
   }
 
-  units     = 1
-  placement = one(juju_machine.streaming_stack[*].machine_id)
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -20,7 +19,6 @@ resource "juju_application" "nats" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "gateway" {
@@ -36,8 +34,7 @@ resource "juju_application" "gateway" {
     base    = local.base
   }
 
-  units     = 1
-  placement = one(juju_machine.streaming_stack[*].machine_id)
+  units = 1
 
   config = {
     ua_token         = var.ua_token
@@ -51,7 +48,6 @@ resource "juju_application" "gateway" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "dashboard" {
@@ -72,8 +68,7 @@ resource "juju_application" "dashboard" {
     snap_risk_level = local.risk
   }
 
-  units     = 1
-  placement = one(juju_machine.streaming_stack[*].machine_id)
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -81,7 +76,6 @@ resource "juju_application" "dashboard" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "agent" {
@@ -97,8 +91,7 @@ resource "juju_application" "agent" {
     base    = local.base
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   config = {
     ua_token        = var.ua_token
@@ -112,7 +105,6 @@ resource "juju_application" "agent" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "coturn" {
@@ -130,8 +122,7 @@ resource "juju_application" "coturn" {
     channel = var.channel
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -139,7 +130,6 @@ resource "juju_application" "coturn" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "ca" {
@@ -155,8 +145,7 @@ resource "juju_application" "ca" {
     channel = "latest/stable"
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -164,7 +153,6 @@ resource "juju_application" "ca" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "lb" {
@@ -360,19 +348,5 @@ resource "juju_integration" "lb_dashboard" {
   application {
     name     = one(juju_application.lb[*].name)
     endpoint = "reverseproxy"
-  }
-}
-
-
-resource "juju_machine" "streaming_stack" {
-  count       = var.deploy_streaming_stack ? 1 : 0
-  model       = var.model_name
-  base        = local.base
-  constraints = join(" ", var.constraints)
-  // FIXME: Currently the provider has some issues with reconciling state using
-  // the response from the JUJU APIs. This is done just to ignore the changes in
-  // string values returned.
-  lifecycle {
-    ignore_changes = [constraints]
   }
 }

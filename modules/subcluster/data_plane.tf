@@ -2,7 +2,7 @@ resource "juju_application" "lxd" {
   name = "lxd"
 
   model       = var.model_name
-  constraints = join(" ", var.constraints)
+  constraints = join(" ", concat(var.constraints, ["root-disk=10240M"]))
 
   charm {
     name    = "ams-lxd"
