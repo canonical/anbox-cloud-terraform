@@ -17,6 +17,17 @@ module "subcluster" {
   deploy_lb              = true
 }
 
+resource "terraform_data" "juju_wait" {
+  for_each = var.wait_for_model ? toset(local.model_names) : []
+  triggers_replace = [
+    module.subcluster
+  ]
+
+  provisioner "local-exec" {
+    # Check status of the unit instead of application due to https://github.com/juju/juju/issues/18625
+    command = "juju wait-for model ${juju_model.anbox_cloud[each.key].name} --query='life==\"alive\" && status==\"available\" && forEach(units, unit => unit.workload-status == \"active\")'"
+  }
+}
 resource "juju_model" "anbox_cloud" {
   for_each = toset(local.model_names)
   name     = "anbox-cloud-${replace(each.value, ".", "-")}"

@@ -39,7 +39,9 @@ resource "juju_application" "ams_node_controller" {
   units = 0
 
   config = {
-    port = "10000-11000"
+    port            = "10000-11000"
+    ua_token        = var.ua_token
+    snap_risk_level = local.risk
   }
 }
 
