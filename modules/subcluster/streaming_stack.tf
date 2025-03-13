@@ -37,7 +37,7 @@ resource "juju_application" "gateway" {
   units = 1
 
   config = {
-    ua_token         = var.ua_token
+    ubuntu_pro_token = var.ubuntu_pro_token
     use_insecure_tls = !var.deploy_lb
     snap_risk_level  = local.risk
   }
@@ -64,8 +64,8 @@ resource "juju_application" "dashboard" {
   }
 
   config = {
-    ua_token        = var.ua_token
-    snap_risk_level = local.risk
+    ubuntu_pro_token = var.ubuntu_pro_token
+    snap_risk_level  = local.risk
   }
 
   units = 1
@@ -94,9 +94,9 @@ resource "juju_application" "agent" {
   units = 1
 
   config = {
-    ua_token        = var.ua_token
-    region          = "cloud-0"
-    snap_risk_level = local.risk
+    ubuntu_pro_token = var.ubuntu_pro_token
+    region           = "cloud-0"
+    snap_risk_level  = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using

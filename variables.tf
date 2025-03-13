@@ -1,4 +1,4 @@
-variable "ua_token" {
+variable "ubuntu_pro_token" {
   description = "Pro token used for anbox services"
   type        = string
   sensitive   = true

@@ -8,7 +8,7 @@ variable `var.subclusters_per_region`. To execute the terraform plan:
 * Create a file called `anbox.tfvars` and set the values for the variables e.g
 
 ```tfvars
-ua_token = "<pro_token_here>"
+ubuntu_pro_token = "<pro_token_here>"
 subclusters_per_region = {
     ap-southeast-1 = 1
 }

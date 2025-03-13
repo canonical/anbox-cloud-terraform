@@ -81,7 +81,7 @@ No modules.
 | <a name="input_external_etcd"></a> [external\_etcd](#input\_external\_etcd) | Channel for the deployed charm | `bool` | `false` | no |
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_name"></a> [model\_name](#input\_model\_name) | Model name used to deploy the applications | `string` | n/a | yes |
-| <a name="input_ua_token"></a> [ua\_token](#input\_ua\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
+| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
 
 ## Outputs
 

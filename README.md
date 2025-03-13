@@ -48,7 +48,7 @@ it can be found [here](./modules/subcluster/README.md)
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
 | <a name="input_lxd_nodes_per_subcluster"></a> [lxd\_nodes\_per\_subcluster](#input\_lxd\_nodes\_per\_subcluster) | Number of lxd nodes to deploy per subcluster | `number` | `1` | no |
 | <a name="input_subclusters_per_region"></a> [subclusters\_per\_region](#input\_subclusters\_per\_region) | Number of subclusters per region in the given cloud e.g `{ ap-south-east-1 = 1 }` | `map(list(string))` | n/a | yes |
-| <a name="input_ua_token"></a> [ua\_token](#input\_ua\_token) | Pro token used for anbox services | `string` | n/a | yes |
+| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used for anbox services | `string` | n/a | yes |
 | <a name="input_wait_for_model"></a> [wait\_for\_model](#input\_wait\_for\_model) | The plan will wait for model to either error out or get active. | `bool` | `false` | no |
 
 ## Outputs
@@ -67,7 +67,7 @@ variable `var.subclusters_per_region`. To execute the terraform plan:
 * Create a file called `anbox.tfvars` and set the values for the variables e.g
 
 ```tfvars
-ua_token = "<pro_token_here>"
+ubuntu_pro_token = "<pro_token_here>"
 subclusters_per_region = {
     ap-southeast-1 = 1
 }

@@ -13,7 +13,7 @@ resource "juju_application" "ams" {
   units = 1
 
   config = {
-    ua_token          = var.ua_token
+    ubuntu_pro_token  = var.ubuntu_pro_token
     use_embedded_etcd = !var.external_etcd
     snap_risk_level   = local.risk
   }

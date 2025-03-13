@@ -1,4 +1,4 @@
-variable "ua_token" {
+variable "ubuntu_pro_token" {
   description = "Pro token used to deploy AMS charm"
   type        = string
   sensitive   = true

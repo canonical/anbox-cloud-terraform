@@ -7,7 +7,7 @@ module "subcluster" {
   for_each               = juju_model.anbox_cloud
   source                 = "./modules/subcluster"
   model_name             = juju_model.anbox_cloud[each.key].name
-  ua_token               = var.ua_token
+  ubuntu_pro_token       = var.ubuntu_pro_token
   channel                = var.anbox_channel
   external_etcd          = true
   constraints            = var.constraints
