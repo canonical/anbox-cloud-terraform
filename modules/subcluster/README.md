@@ -25,13 +25,13 @@ setup network rules properly on the lxd node.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.10.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.17.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 0.10.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 0.17.0 |
 
 ## Modules
 
@@ -68,8 +68,6 @@ No modules.
 | [juju_integration.lb_dashboard](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.lb_gateway](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.nats_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
-| [juju_machine.control_plane](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
-| [juju_machine.streaming_stack](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 
 ## Inputs
 

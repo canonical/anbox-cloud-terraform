@@ -17,13 +17,14 @@ it can be found [here](./modules/subcluster/README.md)
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.10.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.17.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.10.1 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.17.0 |
+| <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
@@ -36,16 +37,19 @@ it can be found [here](./modules/subcluster/README.md)
 | Name | Type |
 |------|------|
 | [juju_model.anbox_cloud](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/model) | resource |
+| [terraform_data.juju_wait](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Name of the cloud to deploy the subcluster to | `string` | n/a | yes |
 | <a name="input_cloud_name"></a> [cloud\_name](#input\_cloud\_name) | Name of the cloud to deploy the subcluster to | `string` | n/a | yes |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
 | <a name="input_lxd_nodes_per_subcluster"></a> [lxd\_nodes\_per\_subcluster](#input\_lxd\_nodes\_per\_subcluster) | Number of lxd nodes to deploy per subcluster | `number` | `1` | no |
 | <a name="input_subclusters_per_region"></a> [subclusters\_per\_region](#input\_subclusters\_per\_region) | Number of subclusters per region in the given cloud e.g `{ ap-south-east-1 = 1 }` | `map(list(string))` | n/a | yes |
 | <a name="input_ua_token"></a> [ua\_token](#input\_ua\_token) | Pro token used for anbox services | `string` | n/a | yes |
+| <a name="input_wait_for_model"></a> [wait\_for\_model](#input\_wait\_for\_model) | The plan will wait for model to either error out or get active. | `bool` | `false` | no |
 
 ## Outputs
 
