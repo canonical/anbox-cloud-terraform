@@ -1,4 +1,4 @@
-variable "ua_token" {
+variable "ubuntu_pro_token" {
   description = "Pro token used for anbox services"
   type        = string
   sensitive   = true
@@ -8,6 +8,11 @@ variable "constraints" {
   description = "List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>`"
   type        = list(string)
   default     = []
+}
+
+variable "anbox_channel" {
+  description = "Name of the cloud to deploy the subcluster to"
+  type        = string
 }
 
 variable "cloud_name" {
@@ -27,3 +32,8 @@ variable "lxd_nodes_per_subcluster" {
   default     = 1
 }
 
+variable "wait_for_model" {
+  type        = bool
+  default     = false
+  description = "The plan will wait for model to either error out or get active."
+}

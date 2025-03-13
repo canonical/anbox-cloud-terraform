@@ -25,13 +25,13 @@ setup network rules properly on the lxd node.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.10.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.17.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 0.10.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 0.17.0 |
 
 ## Modules
 
@@ -68,8 +68,6 @@ No modules.
 | [juju_integration.lb_dashboard](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.lb_gateway](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.nats_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
-| [juju_machine.control_plane](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
-| [juju_machine.streaming_stack](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 
 ## Inputs
 
@@ -83,7 +81,7 @@ No modules.
 | <a name="input_external_etcd"></a> [external\_etcd](#input\_external\_etcd) | Channel for the deployed charm | `bool` | `false` | no |
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_name"></a> [model\_name](#input\_model\_name) | Model name used to deploy the applications | `string` | n/a | yes |
-| <a name="input_ua_token"></a> [ua\_token](#input\_ua\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
+| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
 
 ## Outputs
 

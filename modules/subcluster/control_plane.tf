@@ -7,14 +7,15 @@ resource "juju_application" "ams" {
   charm {
     name    = "ams"
     channel = var.channel
+    base    = local.base
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   config = {
-    ua_token          = var.ua_token
+    ubuntu_pro_token  = var.ubuntu_pro_token
     use_embedded_etcd = !var.external_etcd
+    snap_risk_level   = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -23,8 +24,6 @@ resource "juju_application" "ams" {
   lifecycle {
     ignore_changes = [constraints]
   }
-
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "etcd" {
@@ -33,11 +32,11 @@ resource "juju_application" "etcd" {
 
   model       = var.model_name
   constraints = join(" ", var.constraints)
-  placement   = juju_machine.control_plane.machine_id
 
   charm {
     name    = "etcd"
     channel = "latest/stable"
+    base    = local.base
   }
 
   config = {
@@ -51,7 +50,6 @@ resource "juju_application" "etcd" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "etcd_ca" {
@@ -60,15 +58,14 @@ resource "juju_application" "etcd_ca" {
 
   model       = var.model_name
   constraints = join(" ", var.constraints)
-  placement   = juju_machine.control_plane.machine_id
 
   charm {
     name    = "easyrsa"
     channel = "latest/stable"
+    base    = local.base
   }
 
-  units      = 1
-  depends_on = [juju_machine.control_plane]
+  units = 1
 }
 
 resource "juju_integration" "ams_db" {
@@ -98,17 +95,5 @@ resource "juju_integration" "etcd_ca" {
   application {
     name     = one(juju_application.etcd[*].name)
     endpoint = "certificates"
-  }
-}
-
-resource "juju_machine" "control_plane" {
-  model       = var.model_name
-  base        = local.base
-  constraints = join(" ", var.constraints)
-  // FIXME: Currently the provider has some issues with reconciling state using
-  // the response from the JUJU APIs. This is done just to ignore the changes in
-  // string values returned.
-  lifecycle {
-    ignore_changes = [constraints]
   }
 }

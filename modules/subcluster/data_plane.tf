@@ -2,15 +2,16 @@ resource "juju_application" "lxd" {
   name = "lxd"
 
   model       = var.model_name
-  constraints = join(" ", var.constraints)
+  constraints = join(" ", concat(var.constraints, ["root-disk=10240M"]))
 
   charm {
     name    = "ams-lxd"
     channel = var.channel
+    base    = local.base
   }
 
   config = {
-    ua_token = var.ua_token
+    ubuntu_pro_token = var.ubuntu_pro_token
   }
 
   units = var.lxd_nodes
@@ -38,7 +39,9 @@ resource "juju_application" "ams_node_controller" {
   units = 0
 
   config = {
-    port = "10000-11000"
+    port             = "10000-11000"
+    ubuntu_pro_token = var.ubuntu_pro_token
+    snap_risk_level  = local.risk
   }
 }
 

@@ -8,10 +8,10 @@ resource "juju_application" "nats" {
   charm {
     name    = "nats"
     channel = "latest/stable"
+    base    = local.base
   }
 
-  units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -19,7 +19,6 @@ resource "juju_application" "nats" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "gateway" {
@@ -35,12 +34,12 @@ resource "juju_application" "gateway" {
     base    = local.base
   }
 
-  units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  units = 1
 
   config = {
-    ua_token         = var.ua_token
+    ubuntu_pro_token = var.ubuntu_pro_token
     use_insecure_tls = !var.deploy_lb
+    snap_risk_level  = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -49,7 +48,6 @@ resource "juju_application" "gateway" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "dashboard" {
@@ -62,14 +60,15 @@ resource "juju_application" "dashboard" {
   charm {
     name    = "anbox-cloud-dashboard"
     channel = var.channel
+    base    = local.base
   }
 
   config = {
-    ua_token = var.ua_token
+    ubuntu_pro_token = var.ubuntu_pro_token
+    snap_risk_level  = local.risk
   }
 
-  units     = 1
-  placement = juju_machine.streaming_stack.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -77,7 +76,6 @@ resource "juju_application" "dashboard" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.streaming_stack]
 }
 
 resource "juju_application" "agent" {
@@ -90,14 +88,15 @@ resource "juju_application" "agent" {
   charm {
     name    = "anbox-stream-agent"
     channel = var.channel
+    base    = local.base
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   config = {
-    ua_token = var.ua_token
-    region   = "cloud-0"
+    ubuntu_pro_token = var.ubuntu_pro_token
+    region           = "cloud-0"
+    snap_risk_level  = local.risk
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -106,7 +105,6 @@ resource "juju_application" "agent" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "coturn" {
@@ -118,13 +116,13 @@ resource "juju_application" "coturn" {
 
   charm {
     name = "coturn"
+    base = local.base
     // Since this is released by Anbox Charmer, this charm is release with anbox
     // releases
     channel = var.channel
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -132,7 +130,6 @@ resource "juju_application" "coturn" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "ca" {
@@ -144,11 +141,11 @@ resource "juju_application" "ca" {
 
   charm {
     name    = "easyrsa"
+    base    = local.base
     channel = "latest/stable"
   }
 
-  units     = 1
-  placement = juju_machine.control_plane.machine_id
+  units = 1
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -156,7 +153,6 @@ resource "juju_application" "ca" {
   lifecycle {
     ignore_changes = [constraints]
   }
-  depends_on = [juju_machine.control_plane]
 }
 
 resource "juju_application" "lb" {
@@ -168,7 +164,7 @@ resource "juju_application" "lb" {
 
   charm {
     name     = "haproxy"
-    channel  = "stable"
+    channel  = "latest/stable"
     revision = 66
     // TODO: the HA proxy charm does not work well on 22.04 on ARM, so we pin
     // the revision of the charm as we currently do for our full bundle.
@@ -352,18 +348,5 @@ resource "juju_integration" "lb_dashboard" {
   application {
     name     = one(juju_application.lb[*].name)
     endpoint = "reverseproxy"
-  }
-}
-
-
-resource "juju_machine" "streaming_stack" {
-  model       = var.model_name
-  base        = local.base
-  constraints = join(" ", var.constraints)
-  // FIXME: Currently the provider has some issues with reconciling state using
-  // the response from the JUJU APIs. This is done just to ignore the changes in
-  // string values returned.
-  lifecycle {
-    ignore_changes = [constraints]
   }
 }
