@@ -8,7 +8,7 @@ module "subcluster" {
   source                 = "./modules/subcluster"
   model_name             = juju_model.anbox_cloud[each.key].name
   ua_token               = var.ua_token
-  channel                = "1.21/stable"
+  channel                = var.anbox_channel
   external_etcd          = true
   constraints            = var.constraints
   lxd_nodes              = var.lxd_nodes_per_subcluster

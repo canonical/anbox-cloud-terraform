@@ -10,6 +10,11 @@ variable "constraints" {
   default     = []
 }
 
+variable "anbox_channel" {
+  description = "Name of the cloud to deploy the subcluster to"
+  type        = string
+}
+
 variable "cloud_name" {
   description = "Name of the cloud to deploy the subcluster to"
   type        = string
