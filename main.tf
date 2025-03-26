@@ -3,6 +3,7 @@ locals {
     [for region, clusters in var.subclusters_per_region : [for cluster_name in clusters : "${region}.${cluster_name}"]]
   )
 }
+
 module "subcluster" {
   for_each               = juju_model.anbox_cloud
   source                 = "./modules/subcluster"
@@ -28,6 +29,7 @@ resource "terraform_data" "juju_wait" {
     command = "juju wait-for model ${juju_model.anbox_cloud[each.key].name} --query='life==\"alive\" && status==\"available\" && forEach(units, unit => unit.workload-status == \"active\")'"
   }
 }
+
 resource "juju_model" "anbox_cloud" {
   for_each = toset(local.model_names)
   name     = "anbox-cloud-${replace(each.value, ".", "-")}"
