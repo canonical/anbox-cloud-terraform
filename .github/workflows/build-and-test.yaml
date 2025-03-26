@@ -42,15 +42,17 @@ jobs:
         uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
         with:
           terraform_version: 1.11.2
-      - name: Run terraform init
-        run: |
-          terraform init
+      - name: Setup operator environment
+        uses: charmed-kubernetes/actions-operator@1c7c9a30d7d233e26e7a4fc1505cc44bbd937229
+        with:
+          provider: lxd
       - name: Run Main Module Tests
         run: |
-          terraform test
+          terraform init && terraform test
       - name: Run Subcluster Module Tests
+        working-directory: ./modules/subcluster
         run: |
-          terraform -chdir=./modules/subcluster test
+          terraform init && terraform test
   security-check:
     name: Security Checks
     runs-on: ubuntu-latest
