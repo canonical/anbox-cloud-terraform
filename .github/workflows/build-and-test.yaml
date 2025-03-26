@@ -4,8 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  lint:
-    name: Lint
+  static-checks:
+    name: Static Checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +32,27 @@ jobs:
           tflint --init
           # Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
           tflint -f compact --recursive
+  Test:
+    name: Run terraform tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: 1.11.2
+      - name: Setup operator environment
+        uses: charmed-kubernetes/actions-operator@1c7c9a30d7d233e26e7a4fc1505cc44bbd937229
+        with:
+          provider: lxd
+      - name: Run Main Module Tests
+        run: |
+          terraform init && terraform test
+      - name: Run Subcluster Module Tests
+        working-directory: ./modules/subcluster
+        run: |
+          terraform init && terraform test
   security-check:
     name: Security Checks
     runs-on: ubuntu-latest
