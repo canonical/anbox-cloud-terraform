@@ -2,11 +2,20 @@ variable "ubuntu_pro_token" {
   description = "Pro token used to deploy AMS charm"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = length(var.ubuntu_pro_token) > 0
+    error_message = "Ubuntu Pro Token should not be empty"
+  }
 }
 
 variable "model_name" {
   description = "Model name used to deploy the applications"
   type        = string
+  validation {
+    condition     = length(var.model_name) > 0
+    error_message = "Model name should not be empty"
+  }
 }
 
 variable "channel" {
