@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 variable "ubuntu_pro_token" {
   description = "Pro token used for anbox services"
   type        = string

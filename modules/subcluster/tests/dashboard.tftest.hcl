@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 run "test_dashboard_deploy_only_when_enabled_with_streaming_stack" {
   command = plan
   variables {

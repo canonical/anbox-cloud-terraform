@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 output "applications" {
   value = compact([
     juju_application.ams.id,

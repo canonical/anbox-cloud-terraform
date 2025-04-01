@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 resource "juju_application" "nats" {
   count = var.deploy_streaming_stack ? 1 : 0
   name  = "nats"

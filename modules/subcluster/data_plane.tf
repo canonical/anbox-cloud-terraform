@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 resource "juju_application" "lxd" {
   name = "lxd"
 
