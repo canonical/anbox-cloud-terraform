@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 run "test_external_etcd_enabled" {
   command = plan
   variables {
