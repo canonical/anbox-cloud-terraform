@@ -190,7 +190,8 @@ resource "juju_application" "lb" {
     ignore_changes = [constraints]
   }
 }
-resource "juju_integration" "ams_agent" {
+
+resource "juju_integration" "agent_ams" {
   count = var.deploy_streaming_stack ? 1 : 0
   model = var.model_name
 
@@ -202,6 +203,21 @@ resource "juju_integration" "ams_agent" {
   application {
     name     = one(juju_application.ams[*].name)
     endpoint = "rest-api"
+  }
+}
+
+resource "juju_integration" "ams_agent_streaming" {
+  count = var.deploy_streaming_stack ? 1 : 0
+  model = var.model_name
+
+  application {
+    name     = one(juju_application.agent[*].name)
+    endpoint = "client"
+  }
+
+  application {
+    name     = one(juju_application.ams[*].name)
+    endpoint = "agent"
   }
 }
 

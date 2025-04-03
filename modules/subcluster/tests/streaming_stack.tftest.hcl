@@ -38,8 +38,12 @@ run "test_only_streaming_stack_enabled" {
     error_message = "Coturn not be deployed."
   }
   assert {
-    condition     = length(juju_integration.ams_agent) == 1
+    condition     = length(juju_integration.agent_ams) == 1
     error_message = "AMS not relate to agent."
+  }
+  assert {
+    condition     = length(juju_integration.ams_agent_streaming) == 1
+    error_message = "AMS not relate to agent to share api token."
   }
   assert {
     condition     = length(juju_integration.agent_nats) == 1

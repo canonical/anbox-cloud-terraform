@@ -82,7 +82,11 @@ run "test_default_streaming_stack_dashboard_lb_disabled" {
     error_message = "Coturn should not be deployed by default."
   }
   assert {
-    condition     = length(juju_integration.ams_agent) == 0
+    condition     = length(juju_integration.ams_agent_streaming) == 0
+    error_message = "AMS not relate to agent to share api token."
+  }
+  assert {
+    condition     = length(juju_integration.agent_ams) == 0
     error_message = "AMS should not be related to agent."
   }
   assert {
