@@ -31,6 +31,7 @@ resource "juju_application" "ams_node_controller" {
   charm {
     name    = "ams-node-controller"
     channel = var.channel
+    base    = local.base
   }
 
   // The provider currently does not know properly about subordinate charms
