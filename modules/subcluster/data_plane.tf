@@ -11,7 +11,7 @@ resource "juju_application" "lxd" {
   }
 
   config = {
-    ubuntu_pro_token = var.ubuntu_pro_token
+    ua_token = var.ubuntu_pro_token
   }
 
   units = var.lxd_nodes
@@ -39,9 +39,9 @@ resource "juju_application" "ams_node_controller" {
   units = 0
 
   config = {
-    port             = "10000-11000"
-    ubuntu_pro_token = var.ubuntu_pro_token
-    snap_risk_level  = local.risk
+    port            = "10000-11000"
+    ua_token        = var.ubuntu_pro_token
+    snap_risk_level = local.risk
   }
 }
 
