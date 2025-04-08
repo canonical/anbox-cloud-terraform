@@ -15,7 +15,8 @@ jobs:
           sudo snap install terraform --channel latest/stable --classic
       - name: Setup TFLint
         run:
-         sudo snap install tflint --revision 94
+          # This is the revision corresponding to the ARM architecture
+          sudo snap install tflint --revision 94
       - name: Run terraform fmt check
         run: terraform fmt -check -diff -recursive .
       - name: Run terraform init
@@ -30,9 +31,6 @@ jobs:
           tflint --init
           # Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
           tflint -f compact --recursive
-      # Tfsec - Security scanner for your Terraform code
-      - name: Run Tfsec
-        uses: aquasecurity/tfsec-action@b466648d6e39e7c75324f25d83891162a721f2d6 # v1.0.3
   Test:
     name: Run terraform tests
     runs-on: [self-hosted, linux, ARM64, jammy, medium]
@@ -50,6 +48,10 @@ jobs:
         run: |
           terraform init && terraform test
       - name: Run Subcluster Module Tests
-        working-directory: ./modules/subcluster
+        working-directory: ./modules
         run: |
-          terraform init && terraform test
+          for module in ./*; do
+            pushd $module
+            terraform init && terraform test
+            popd
+          done

@@ -1,0 +1,51 @@
+name: Run security scan
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Run triviy security scan
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Setup Trivy
+      uses: ./.github/actions/setup-trivy
+    - name: Run Trivy vulnerability scanner
+      run: |
+        trivy repository "$GITHUB_WORKSPACE" \
+          -c trivy.yaml \
+          --ignorefile .trivyignore \
+          --show-suppressed \
+          --cache-dir="$GITHUB_WORKSPACE"/.cache/trivy
+
+    - name: Setup Terraform
+      run:
+        sudo snap install terraform --channel latest/stable --classic
+    - name: Setup operator environment
+      uses: charmed-kubernetes/actions-operator@1c7c9a30d7d233e26e7a4fc1505cc44bbd937229
+      with:
+        provider: lxd
+    - name: Create terraform Plan
+      run: |
+        cat <<EOF > default.auto.tfvars
+        ubuntu_pro_token = "abc"
+        subclusters_per_region = {
+          default = ["1"]
+        }
+        cloud_name  = "localhost"
+        anbox_channel  = "1.26/stable"
+        wait_for_model = true
+        EOF
+        terraform init && terraform plan -out tfplan -var-file=default.auto.tfvars
+    - name: Run Trivy Terraform Plan Scanner
+      run: |
+        trivy config tfplan
+    - name: Compare Trivy results with KEV list
+      run: bash ./scripts/compare_kev_vulnerabilities.sh
