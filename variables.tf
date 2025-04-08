@@ -53,8 +53,3 @@ variable "lxd_nodes_per_subcluster" {
   default     = 1
 }
 
-variable "wait_for_model" {
-  type        = bool
-  default     = false
-  description = "The plan will wait for model to either error out or get active."
-}
