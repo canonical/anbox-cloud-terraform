@@ -2,11 +2,6 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
-variable "model_suffix" {
-  type        = string
-  description = "Suffix to attach for model"
-}
-
 variable "ubuntu_pro_token" {
   description = "Pro token used to deploy AMS charm"
   type        = string
@@ -22,18 +17,6 @@ variable "channel" {
   description = "Channel for the deployed charm"
   type        = string
   default     = "latest/stable"
-}
-
-variable "external_etcd" {
-  description = "Channel for the deployed charm"
-  type        = bool
-  default     = false
-}
-
-variable "lxd_nodes" {
-  description = "Channel for the deployed charm"
-  type        = number
-  default     = 1
 }
 
 variable "constraints" {

@@ -19,7 +19,7 @@ variable "constraints" {
 }
 
 variable "anbox_channel" {
-  description = "Name of the cloud to deploy the subcluster to"
+  description = "Channel to deploy anbox cloud charms from."
   type        = string
 
   validation {
@@ -28,21 +28,12 @@ variable "anbox_channel" {
   }
 }
 
-variable "cloud_name" {
-  description = "Name of the cloud to deploy the subcluster to"
-  type        = string
+variable "subcluster_labels" {
+  type        = list(string)
+  default     = []
+  description = "Number of subclusters to deploy"
   validation {
-    condition     = length(var.cloud_name) > 0
-    error_message = "Cloud name cannot be empty"
-  }
-}
-
-variable "subclusters_per_region" {
-  description = "Number of subclusters per region in the given cloud e.g `{ ap-south-east-1 = 1 }`"
-  type        = map(list(string))
-  nullable    = false
-  validation {
-    condition     = length(var.subclusters_per_region) > 0
+    condition     = length(var.subcluster_labels) > 0
     error_message = "Minimum 1 subcluster is required."
   }
 }
