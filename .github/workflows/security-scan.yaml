@@ -36,12 +36,8 @@ jobs:
       run: |
         cat <<EOF > default.auto.tfvars
         ubuntu_pro_token = "abc"
-        subclusters_per_region = {
-          default = ["1"]
-        }
-        cloud_name  = "localhost"
         anbox_channel  = "1.26/stable"
-        wait_for_model = true
+        subcluster_labels = ["a"]
         EOF
         terraform init && terraform plan -out tfplan -var-file=default.auto.tfvars
     - name: Run Trivy Terraform Plan Scanner
