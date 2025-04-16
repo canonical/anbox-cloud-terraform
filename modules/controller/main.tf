@@ -4,6 +4,7 @@
 
 locals {
   controller_model_name = "anbox-controller"
+  num_units             = var.enable_ha ? 3 : 1
 }
 
 resource "juju_model" "controller" {
@@ -30,7 +31,7 @@ resource "juju_application" "nats" {
     base    = local.base
   }
 
-  units = 1
+  units = local.num_units
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -52,7 +53,7 @@ resource "juju_application" "gateway" {
     base    = local.base
   }
 
-  units = 1
+  units = local.num_units
 
   config = {
     ua_token        = var.ubuntu_pro_token
@@ -84,7 +85,7 @@ resource "juju_application" "dashboard" {
     snap_risk_level = local.risk
   }
 
-  units = 1
+  units = local.num_units
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -106,7 +107,7 @@ resource "juju_application" "ca" {
     channel = "latest/stable"
   }
 
-  units = 1
+  units = local.num_units
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in

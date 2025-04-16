@@ -9,7 +9,7 @@ This is a terraform plan to deploy anbox cloud using juju and terraform.
 The module uses `terraform-provider-juju` to deploy the anbox bundles to a
 bootstrapped juju cluster.
 
-This plan uses terroform moudules to deploy an [anbox subcluster](./modules/subcluster/README.md)
+This plan uses terraform moudules to deploy an [anbox subcluster](./modules/subcluster/README.md)
 and a [control plane](./modules/controller/README.md) for Anbox Cloud into two separate juju models.
 The subclusters can be scaled up and down according to the requirements. The two terraform modules expose
 the required attributes as outputs to be used to connect apps across the two juju models using
