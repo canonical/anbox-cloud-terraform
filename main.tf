@@ -10,7 +10,11 @@ module "subcluster" {
   channel          = var.anbox_channel
   external_etcd    = true
   constraints      = var.constraints
-  lxd_nodes        = var.lxd_nodes_per_subcluster
+  enable_ha        = var.enable_ha
+
+  // We let the `lxd_nodes_per_subcluster` value override the HA configuration
+  // for number LXD nodes.
+  lxd_nodes = var.enable_ha ? (var.lxd_nodes_per_subcluster >= 3 ? var.lxd_nodes_per_subcluster : 3) : var.lxd_nodes_per_subcluster
 }
 
 module "controller" {
@@ -18,6 +22,7 @@ module "controller" {
   ubuntu_pro_token = var.ubuntu_pro_token
   channel          = var.anbox_channel
   constraints      = var.constraints
+  enable_ha        = var.enable_ha
 }
 
 resource "juju_integration" "agent_nats_cmr" {

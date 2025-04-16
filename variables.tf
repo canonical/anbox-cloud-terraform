@@ -44,3 +44,10 @@ variable "lxd_nodes_per_subcluster" {
   default     = 1
 }
 
+variable "enable_ha" {
+  description = "Number of lxd nodes to deploy per subcluster"
+  type        = bool
+  default     = false
+}
+
+

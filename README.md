@@ -9,7 +9,7 @@ This is a terraform plan to deploy anbox cloud using juju and terraform.
 The module uses `terraform-provider-juju` to deploy the anbox bundles to a
 bootstrapped juju cluster.
 
-This plan uses terroform moudules to deploy an [anbox subcluster](./modules/subcluster/README.md)
+This plan uses terraform moudules to deploy an [anbox subcluster](./modules/subcluster/README.md)
 and a [control plane](./modules/controller/README.md) for Anbox Cloud into two separate juju models.
 The subclusters can be scaled up and down according to the requirements. The two terraform modules expose
 the required attributes as outputs to be used to connect apps across the two juju models using
@@ -48,10 +48,10 @@ cross model relations.
 |------|-------------|------|---------|:--------:|
 | <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Channel to deploy anbox cloud charms from. | `string` | n/a | yes |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_lxd_nodes_per_subcluster"></a> [lxd\_nodes\_per\_subcluster](#input\_lxd\_nodes\_per\_subcluster) | Number of lxd nodes to deploy per subcluster | `number` | `1` | no |
 | <a name="input_subcluster_labels"></a> [subcluster\_labels](#input\_subcluster\_labels) | Number of subclusters to deploy | `list(string)` | `[]` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used for anbox services | `string` | n/a | yes |
-| <a name="input_wait_for_model"></a> [wait\_for\_model](#input\_wait\_for\_model) | The plan will wait for model to either error out or get active. | `bool` | `false` | no |
 
 ## Outputs
 
