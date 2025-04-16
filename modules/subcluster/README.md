@@ -39,7 +39,7 @@ a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443)
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.17.1 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.18.0 |
 
 ## Modules
 
@@ -52,15 +52,15 @@ No modules.
 | [juju_application.agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ams_node_controller](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
+| [juju_application.ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.coturn](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.etcd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
-| [juju_application.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_integration.agent_ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.agent_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_agent_streaming](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_db](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
-| [juju_integration.ams_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_integration.ams_lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.coturn_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ip_table_rules](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
@@ -73,6 +73,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_channel"></a> [channel](#input\_channel) | Channel for the deployed charm | `string` | `"latest/stable"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_external_etcd"></a> [external\_etcd](#input\_external\_etcd) | Channel for the deployed charm | `bool` | `false` | no |
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_suffix"></a> [model\_suffix](#input\_model\_suffix) | Suffix to attach for model | `string` | n/a | yes |
@@ -82,7 +83,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_agent_app"></a> [agent\_app](#output\_agent\_app) | n/a |
+| <a name="output_agent_app_name"></a> [agent\_app\_name](#output\_agent\_app\_name) | n/a |
 | <a name="output_ams_offer_url"></a> [ams\_offer\_url](#output\_ams\_offer\_url) | n/a |
 | <a name="output_model_name"></a> [model\_name](#output\_model\_name) | n/a |
 <!-- END_TF_DOCS -->

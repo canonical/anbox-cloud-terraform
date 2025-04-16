@@ -6,6 +6,7 @@ locals {
   // we need to remove all special characters from the string to use it as
   // an identifier for an offer.
   offer_suffix = replace(var.model_suffix, "/[-_.]*/", "")
+  num_units    = var.enable_ha ? 3 : 1
 }
 
 resource "juju_model" "subcluster" {
@@ -31,7 +32,7 @@ resource "juju_application" "ams" {
     base    = local.base
   }
 
-  units = 1
+  units = local.num_units
 
   config = {
     ua_token          = var.ubuntu_pro_token
@@ -64,7 +65,7 @@ resource "juju_application" "etcd" {
     channel = "3.4/stable"
   }
 
-  units = 1
+  units = local.num_units
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
@@ -85,7 +86,7 @@ resource "juju_application" "ca" {
     base    = local.base
   }
 
-  units = 1
+  units = local.num_units
 }
 
 resource "juju_integration" "ams_db" {
@@ -130,7 +131,7 @@ resource "juju_application" "agent" {
     base    = local.base
   }
 
-  units = 1
+  units = local.num_units
 
   config = {
     ua_token        = var.ubuntu_pro_token
@@ -160,7 +161,7 @@ resource "juju_application" "coturn" {
     channel = var.channel
   }
 
-  units = 1
+  units = local.num_units
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in

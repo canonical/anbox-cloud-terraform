@@ -25,3 +25,9 @@ variable "constraints" {
   default     = []
 }
 
+variable "enable_ha" {
+  description = "Number of lxd nodes to deploy per subcluster"
+  type        = bool
+  default     = false
+}
+

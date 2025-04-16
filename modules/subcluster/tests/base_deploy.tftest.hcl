@@ -79,6 +79,10 @@ run "test_base_deployment_layout" {
     error_message = "A separate model should be created for subcluster"
   }
   assert {
+    condition     = length(juju_application.ams) > 0
+    error_message = "AMS should be deployed by default."
+  }
+  assert {
     condition     = length(juju_application.agent) > 0
     error_message = "Anbox Stream Agent should be deployed by default."
   }
