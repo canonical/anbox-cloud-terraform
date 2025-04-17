@@ -28,26 +28,37 @@ variable "anbox_channel" {
   }
 }
 
-variable "subcluster_labels" {
-  type        = list(string)
+variable "subclusters" {
+  type = list(object({
+    name           = string
+    lxd_node_count = number
+    registry = optional(object({
+      enable = bool
+      mode   = optional(string)
+    }))
+  }))
   default     = []
-  description = "Number of subclusters to deploy"
+  description = <<EOD
+  "List of subclusters to deploy."
+  EOD
   validation {
-    condition     = length(var.subcluster_labels) > 0
+    condition     = length(var.subclusters) > 0
     error_message = "Minimum 1 subcluster is required."
+  }
+  validation {
+    condition     = alltrue([for c in var.subclusters : c.registry == null ? true : (c.registry.enable && length(c.registry.mode) > 0 ? true : false)])
+    error_message = "Registry mode must be set if registry is enabled"
   }
 }
 
-variable "lxd_nodes_per_subcluster" {
-  description = "Number of lxd nodes to deploy per subcluster"
-  type        = number
-  default     = 1
-}
-
 variable "enable_ha" {
-  description = "Number of lxd nodes to deploy per subcluster"
+  description = "Enable HA mode for anbox cloud"
   type        = bool
   default     = false
 }
 
-
+variable "deploy_registry" {
+  description = "Deploy the Anbox Application Registry"
+  type        = bool
+  default     = false
+}

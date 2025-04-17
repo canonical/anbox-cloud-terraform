@@ -50,10 +50,12 @@ resource "juju_offer" "client_offer" {
   model            = juju_model.registry.name
   application_name = juju_application.aar.name
   endpoint         = "client"
+  name             = "aar-client"
 }
 
 resource "juju_offer" "publisher_offer" {
   model            = juju_model.registry.name
   application_name = juju_application.aar.name
+  name             = "aar-publisher"
   endpoint         = "publisher"
 }

@@ -33,6 +33,7 @@ cross model relations.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_controller"></a> [controller](#module\_controller) | ./modules/controller | n/a |
+| <a name="module_registry"></a> [registry](#module\_registry) | ./modules/registry | n/a |
 | <a name="module_subcluster"></a> [subcluster](#module\_subcluster) | ./modules/subcluster | n/a |
 
 ## Resources
@@ -48,10 +49,10 @@ cross model relations.
 |------|-------------|------|---------|:--------:|
 | <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Channel to deploy anbox cloud charms from. | `string` | n/a | yes |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
-| <a name="input_lxd_nodes_per_subcluster"></a> [lxd\_nodes\_per\_subcluster](#input\_lxd\_nodes\_per\_subcluster) | Number of lxd nodes to deploy per subcluster | `number` | `1` | no |
-| <a name="input_subcluster_labels"></a> [subcluster\_labels](#input\_subcluster\_labels) | Number of subclusters to deploy | `list(string)` | `[]` | no |
+| <a name="input_deploy_registry"></a> [deploy\_registry](#input\_deploy\_registry) | Deploy the Anbox Application Registry | `bool` | `false` | no |
+| <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
+| <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | "List of subclusters to deploy." | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      enable = bool<br/>      mode   = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used for anbox services | `string` | n/a | yes |
-| <a name="input_wait_for_model"></a> [wait\_for\_model](#input\_wait\_for\_model) | The plan will wait for model to either error out or get active. | `bool` | `false` | no |
 
 ## Outputs
 

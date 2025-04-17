@@ -228,6 +228,20 @@ resource "juju_integration" "coturn_agent" {
   }
 }
 
+resource "juju_integration" "ams_aar" {
+  count = var.registry_connection != null ? 1 : 0
+  model = juju_model.subcluster.name
+
+  application {
+    name     = juju_application.ams.name
+    endpoint = "registry-${var.registry_connection.mode}"
+  }
+
+  application {
+    offer_url = var.registry_connection.offer_url
+  }
+}
+
 resource "juju_offer" "ams_offer" {
   model            = juju_model.subcluster.name
   application_name = juju_application.ams.name

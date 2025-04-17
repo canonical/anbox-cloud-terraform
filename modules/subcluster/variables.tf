@@ -48,3 +48,12 @@ variable "enable_ha" {
   default     = false
 }
 
+variable "registry_connection" {
+  description = "Object to represent connection details for connecting to anbox registry"
+  type = object({
+    mode      = string
+    offer_url = string
+  })
+  default = null
+}
+
