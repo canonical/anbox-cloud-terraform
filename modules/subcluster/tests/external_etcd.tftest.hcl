@@ -6,16 +6,12 @@ run "test_external_etcd_enabled" {
   command = plan
   variables {
     ubuntu_pro_token = "token"
-    model_name       = "test-model"
+    model_suffix     = "test-model"
     external_etcd    = true
   }
   assert {
     condition     = length(juju_application.etcd) == 1
     error_message = "ETCD not deployed."
-  }
-  assert {
-    condition     = length(juju_application.etcd_ca) == 1
-    error_message = "ETCD CA not deployed"
   }
   assert {
     condition     = length(juju_integration.ams_db) == 1

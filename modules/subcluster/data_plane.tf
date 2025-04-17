@@ -5,7 +5,7 @@
 resource "juju_application" "lxd" {
   name = "lxd"
 
-  model       = var.model_name
+  model       = juju_model.subcluster.name
   constraints = join(" ", concat(var.constraints, ["root-disk=10240M"]))
 
   charm {
@@ -30,7 +30,7 @@ resource "juju_application" "lxd" {
 resource "juju_application" "ams_node_controller" {
   name = "ams-node-controller"
 
-  model = var.model_name
+  model = juju_model.subcluster.name
 
   charm {
     name    = "ams-node-controller"
@@ -51,7 +51,7 @@ resource "juju_application" "ams_node_controller" {
 }
 
 resource "juju_integration" "ip_table_rules" {
-  model = var.model_name
+  model = juju_model.subcluster.name
 
   application {
     name     = juju_application.ams_node_controller.name
@@ -64,8 +64,8 @@ resource "juju_integration" "ip_table_rules" {
   }
 }
 
-resource "juju_integration" "ams_node" {
-  model = var.model_name
+resource "juju_integration" "ams_lxd" {
+  model = juju_model.subcluster.name
 
   application {
     name     = juju_application.ams.name
