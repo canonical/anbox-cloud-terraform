@@ -50,6 +50,7 @@ jobs:
       - name: Run Subcluster Module Tests
         working-directory: ./modules
         run: |
+          set -e
           for module in ./*; do
             pushd $module
             terraform init && terraform test

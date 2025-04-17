@@ -19,7 +19,7 @@ variable "constraints" {
 }
 
 variable "anbox_channel" {
-  description = "Name of the cloud to deploy the subcluster to"
+  description = "Channel to deploy anbox cloud charms from."
   type        = string
 
   validation {
@@ -28,33 +28,37 @@ variable "anbox_channel" {
   }
 }
 
-variable "cloud_name" {
-  description = "Name of the cloud to deploy the subcluster to"
-  type        = string
+variable "subclusters" {
+  type = list(object({
+    name           = string
+    lxd_node_count = number
+    registry = optional(object({
+      enable = bool
+      mode   = optional(string)
+    }))
+  }))
+  default     = []
+  description = <<EOD
+  "List of subclusters to deploy."
+  EOD
   validation {
-    condition     = length(var.cloud_name) > 0
-    error_message = "Cloud name cannot be empty"
-  }
-}
-
-variable "subclusters_per_region" {
-  description = "Number of subclusters per region in the given cloud e.g `{ ap-south-east-1 = 1 }`"
-  type        = map(list(string))
-  nullable    = false
-  validation {
-    condition     = length(var.subclusters_per_region) > 0
+    condition     = length(var.subclusters) > 0
     error_message = "Minimum 1 subcluster is required."
   }
+  validation {
+    condition     = alltrue([for c in var.subclusters : c.registry == null ? true : (c.registry.enable && length(c.registry.mode) > 0 ? true : false)])
+    error_message = "Registry mode must be set if registry is enabled"
+  }
 }
 
-variable "lxd_nodes_per_subcluster" {
-  description = "Number of lxd nodes to deploy per subcluster"
-  type        = number
-  default     = 1
-}
-
-variable "wait_for_model" {
+variable "enable_ha" {
+  description = "Enable HA mode for anbox cloud"
   type        = bool
   default     = false
-  description = "The plan will wait for model to either error out or get active."
+}
+
+variable "deploy_registry" {
+  description = "Deploy the Anbox Application Registry"
+  type        = bool
+  default     = false
 }
