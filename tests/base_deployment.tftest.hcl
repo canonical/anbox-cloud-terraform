@@ -5,19 +5,28 @@
 run "test_required_variables" {
   command = plan
   variables {
-    ubuntu_pro_token  = ""
-    anbox_channel     = ""
-    subcluster_labels = []
+    ubuntu_pro_token = ""
+    anbox_channel    = ""
+    subclusters      = []
   }
-  expect_failures = [var.ubuntu_pro_token, var.anbox_channel, var.subcluster_labels]
+  expect_failures = [var.ubuntu_pro_token, var.anbox_channel, var.subclusters]
 }
 
 run "test_models_per_subcluster" {
   command = plan
   variables {
-    ubuntu_pro_token  = "token"
-    anbox_channel     = "1.26/edge"
-    subcluster_labels = ["a", "b", "c"]
+    ubuntu_pro_token = "token"
+    anbox_channel    = "1.26/edge"
+    subclusters = [{
+      name           = "a"
+      lxd_node_count = 1
+      }, {
+      name           = "b"
+      lxd_node_count = 1
+      }, {
+      name           = "c"
+      lxd_node_count = 1
+    }]
   }
 
   assert {

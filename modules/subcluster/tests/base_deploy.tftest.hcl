@@ -126,4 +126,21 @@ run "test_base_deployment_layout" {
     condition     = length(juju_application.ams_node_controller) > 0
     error_message = "AMS Node Controller should be deployed by default."
   }
+  assert {
+    condition     = length(juju_integration.ams_aar) == 0
+    error_message = "Registry relation should not be configured."
+  }
+}
+
+run "test_registry" {
+  command = plan
+  variables {
+    ubuntu_pro_token = "token"
+    model_suffix     = "a"
+    registry_config  = { mode = "client", offer_url = "client_url" }
+  }
+  assert {
+    condition     = length(juju_integration.ams_aar) > 0
+    error_message = "Registry relation should be configured."
+  }
 }

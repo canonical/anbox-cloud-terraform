@@ -9,10 +9,18 @@ variable `var.subclusters_per_region`. To execute the terraform plan:
 
 ```tfvars
 ubuntu_pro_token = "<pro_token_here>"
-subclusters_per_region = {
-    ap-southeast-1 = 1
-}
-cloud_name = "aws"
+anbox_channel    = "1.26/edge"
+subclusters = [
+  {
+    name           = "a"
+    lxd_node_count = 1
+    registry = {
+      mode = "client"
+    }
+  }
+]
+deploy_registry = true
+enable_ha = false
 constraints = [ "arch=arm64" ]
 ```
 

@@ -1,3 +1,6 @@
+#
+# Copyright 2025 Canonical Ltd.  All rights reserved.
+#
 output "nats_offer_url" {
   value = juju_offer.nats_offer.url
 }

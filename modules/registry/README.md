@@ -57,5 +57,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_client_offer_url"></a> [client\_offer\_url](#output\_client\_offer\_url) | n/a |
-| <a name="output_publisher_url"></a> [publisher\_url](#output\_publisher\_url) | n/a |
+| <a name="output_publisher_offer_url"></a> [publisher\_offer\_url](#output\_publisher\_offer\_url) | n/a |
 <!-- END_TF_DOCS -->

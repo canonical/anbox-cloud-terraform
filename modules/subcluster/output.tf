@@ -1,3 +1,6 @@
+#
+# Copyright 2025 Canonical Ltd.  All rights reserved.
+#
 output "ams_offer_url" {
   value = juju_offer.ams_offer.url
 }

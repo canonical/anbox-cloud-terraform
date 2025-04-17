@@ -1,3 +1,7 @@
+//
+// Copyright 2025 Canonical Ltd.  All rights reserved.
+//
+
 run "test_ha_deployment" {
   command = plan
   variables {
