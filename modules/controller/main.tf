@@ -193,3 +193,39 @@ resource "juju_offer" "nats_offer" {
   application_name = juju_application.nats.name
   endpoint         = "client"
 }
+
+resource "juju_application" "cos_agent" {
+  count = var.enable_cos ? 1 : 0
+  name  = "grafana-agent"
+
+  model = juju_model.controller.name
+
+  charm {
+    name = "grafana-agent"
+    base = local.base
+  }
+
+  units = 0
+
+  // FIXME: Currently the provider has some issues with reconciling state using
+  // the response from the JUJU APIs. This is done just to ignore the changes in
+  // string values returned.
+  lifecycle {
+    ignore_changes = [constraints]
+  }
+}
+
+resource "juju_integration" "gateway_cos" {
+  count = var.enable_cos ? 1 : 0
+  model = juju_model.controller.name
+
+  application {
+    name     = juju_application.gateway.name
+    endpoint = "cos-agent"
+  }
+
+  application {
+    name     = one(juju_application.cos_agent[*].name)
+    endpoint = "cos-agent"
+  }
+}

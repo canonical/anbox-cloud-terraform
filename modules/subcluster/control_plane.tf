@@ -248,3 +248,41 @@ resource "juju_offer" "ams_offer" {
   endpoint         = "rest-api"
   name             = "ams${local.offer_suffix}"
 }
+
+
+resource "juju_application" "cos_agent" {
+  count = var.enable_cos ? 1 : 0
+  name  = "grafana-agent"
+
+  model = juju_model.subcluster.name
+
+  charm {
+    name = "grafana-agent"
+    base = local.base
+  }
+
+  units = 0
+
+  // FIXME: Currently the provider has some issues with reconciling state using
+  // the response from the JUJU APIs. This is done just to ignore the changes in
+  // string values returned.
+  lifecycle {
+    ignore_changes = [constraints]
+  }
+}
+
+resource "juju_integration" "ams_cos" {
+  count = var.enable_cos ? 1 : 0
+  model = juju_model.subcluster.name
+
+  application {
+    name     = juju_application.ams.name
+    endpoint = "cos-agent"
+  }
+
+  application {
+    name     = one(juju_application.cos_agent[*].name)
+    endpoint = "cos-agent"
+  }
+}
+

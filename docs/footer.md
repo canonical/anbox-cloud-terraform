@@ -21,6 +21,7 @@ subclusters = [
 ]
 deploy_registry = true
 enable_ha = false
+enable_cos = false
 constraints = [ "arch=arm64" ]
 ```
 

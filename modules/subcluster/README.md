@@ -53,6 +53,7 @@ No modules.
 | [juju_application.ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ams_node_controller](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
+| [juju_application.cos_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.coturn](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.etcd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
@@ -60,6 +61,7 @@ No modules.
 | [juju_integration.agent_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_aar](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_agent_streaming](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_integration.ams_cos](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_db](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ams_lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.coturn_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
@@ -74,6 +76,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_channel"></a> [channel](#input\_channel) | Channel for the deployed charm | `string` | `"latest/stable"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_external_etcd"></a> [external\_etcd](#input\_external\_etcd) | Channel for the deployed charm | `bool` | `false` | no |
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
@@ -86,6 +89,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_agent_app_name"></a> [agent\_app\_name](#output\_agent\_app\_name) | n/a |
-| <a name="output_ams_offer_url"></a> [ams\_offer\_url](#output\_ams\_offer\_url) | n/a |
+| <a name="output_ams_offer_url"></a> [ams\_offer\_url](#output\_ams\_offer\_url) | Copyright 2025 Canonical Ltd.  All rights reserved. |
 | <a name="output_model_name"></a> [model\_name](#output\_model\_name) | n/a |
 <!-- END_TF_DOCS -->

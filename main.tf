@@ -19,6 +19,7 @@ module "subcluster" {
   constraints      = var.constraints
   enable_ha        = var.enable_ha
   registry_config  = each.value.registry_config
+  enable_cos       = var.enable_cos
 
   // We let the `lxd_node_count` value override the HA configuration for number
   // of LXD nodes.
@@ -31,6 +32,7 @@ module "controller" {
   channel          = var.anbox_channel
   constraints      = var.constraints
   enable_ha        = var.enable_ha
+  enable_cos       = var.enable_cos
 }
 
 module "registry" {

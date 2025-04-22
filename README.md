@@ -50,6 +50,7 @@ cross model relations.
 | <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Channel to deploy anbox cloud charms from. | `string` | n/a | yes |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
 | <a name="input_deploy_registry"></a> [deploy\_registry](#input\_deploy\_registry) | Deploy the Anbox Application Registry | `bool` | `false` | no |
+| <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
 | <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | List of subclusters to deploy. | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      mode = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used for anbox services | `string` | n/a | yes |
@@ -81,6 +82,7 @@ subclusters = [
 ]
 deploy_registry = true
 enable_ha = false
+enable_cos = false
 constraints = [ "arch=arm64" ]
 ```
 

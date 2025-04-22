@@ -57,3 +57,9 @@ variable "registry_config" {
   default = null
 }
 
+variable "enable_cos" {
+  description = "Enable cos integration by deploying grafana-agent charm."
+  type        = bool
+  default     = false
+}
+

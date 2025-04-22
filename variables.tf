@@ -1,7 +1,6 @@
 //
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
-
 variable "ubuntu_pro_token" {
   description = "Pro token used for anbox services"
   type        = string
@@ -46,6 +45,12 @@ variable "subclusters" {
     condition     = alltrue([for c in var.subclusters : c.registry == null ? true : length(c.registry.mode) > 0 ? true : false])
     error_message = "Registry mode must be set if registry is enabled"
   }
+}
+
+variable "enable_cos" {
+  description = "Enable cos integration by deploying grafana-agent charm."
+  type        = bool
+  default     = false
 }
 
 variable "enable_ha" {
