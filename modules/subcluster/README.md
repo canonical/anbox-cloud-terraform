@@ -88,7 +88,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_agent_app_name"></a> [agent\_app\_name](#output\_agent\_app\_name) | n/a |
-| <a name="output_ams_offer_url"></a> [ams\_offer\_url](#output\_ams\_offer\_url) | Copyright 2025 Canonical Ltd.  All rights reserved. |
-| <a name="output_model_name"></a> [model\_name](#output\_model\_name) | n/a |
+| <a name="output_agent_app_name"></a> [agent\_app\_name](#output\_agent\_app\_name) | Anbox Stream Agent application name deployed in the subcluster model. |
+| <a name="output_ams_offer_url"></a> [ams\_offer\_url](#output\_ams\_offer\_url) | Juju offer url for connecting to the AMS charm. |
+| <a name="output_model_name"></a> [model\_name](#output\_model\_name) | Model name for the deployed subcluster. |
 <!-- END_TF_DOCS -->

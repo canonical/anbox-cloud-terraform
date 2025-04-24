@@ -56,6 +56,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_client_offer_url"></a> [client\_offer\_url](#output\_client\_offer\_url) | Copyright 2025 Canonical Ltd.  All rights reserved. |
-| <a name="output_publisher_offer_url"></a> [publisher\_offer\_url](#output\_publisher\_offer\_url) | n/a |
+| <a name="output_client_offer_url"></a> [client\_offer\_url](#output\_client\_offer\_url) | Juju Offer URL for connecting to AAR in `client` mode. |
+| <a name="output_publisher_offer_url"></a> [publisher\_offer\_url](#output\_publisher\_offer\_url) | Juju Offer URL for connecting to AAR in `publisher` mode. |
 <!-- END_TF_DOCS -->
