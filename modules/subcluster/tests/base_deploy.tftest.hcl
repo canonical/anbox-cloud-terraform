@@ -44,7 +44,11 @@ run "test_lxd_nodes_scale" {
   }
   assert {
     condition     = juju_application.lxd.units == 3
-    error_message = "Default number of lxd nodes should be 3"
+    error_message = "Number of lxd applications should be 3"
+  }
+  assert {
+    condition     = length(juju_machine.lxd_node) == 3
+    error_message = "Number of lxd machines should be 3"
   }
 }
 
@@ -53,6 +57,10 @@ run "test_external_etcd_disabled" {
   variables {
     ubuntu_pro_token = "token"
     model_suffix     = "-a"
+  }
+  assert {
+    condition     = length(juju_machine.db_node) == 0
+    error_message = "ETCD should not be deployed by default"
   }
   assert {
     condition     = length(juju_application.etcd) == 0
@@ -75,8 +83,20 @@ run "test_base_deployment_layout" {
     model_suffix     = "-a"
   }
   assert {
+    condition     = length(juju_machine.ams_node) == 1
+    error_message = "A separate machine should be created for AMS."
+  }
+  assert {
+    condition     = length(juju_machine.lxd_node) == 1
+    error_message = "A separate machine should be created for lxd."
+  }
+  assert {
+    condition     = length(juju_machine.db_node) == 0
+    error_message = "ETCD should not be deployed by default."
+  }
+  assert {
     condition     = length(juju_model.subcluster) > 0
-    error_message = "A separate model should be created for subcluster"
+    error_message = "A separate model should be created for subcluster."
   }
   assert {
     condition     = length(juju_application.ams) > 0
@@ -104,23 +124,23 @@ run "test_base_deployment_layout" {
   }
   assert {
     condition     = length(juju_integration.agent_ca) > 0
-    error_message = "Agent should be related to CA"
+    error_message = "Agent should be related to CA."
   }
   assert {
     condition     = length(juju_integration.coturn_agent) > 0
-    error_message = "Coturn should be related to Agent"
+    error_message = "Coturn should be related to Agent."
   }
   assert {
     condition     = length(juju_integration.ams_lxd) > 0
-    error_message = "AMS should be related to LXD"
+    error_message = "AMS should be related to LXD."
   }
   assert {
     condition     = length(juju_integration.ip_table_rules) > 0
-    error_message = "LXD should be related to AMS Node Controller"
+    error_message = "LXD should be related to AMS Node Controller."
   }
   assert {
     condition     = juju_application.lxd.units == 1
-    error_message = "Default number of lxd nodes should be 1"
+    error_message = "Default number of lxd nodes should be 1."
   }
   assert {
     condition     = length(juju_application.ams_node_controller) > 0
