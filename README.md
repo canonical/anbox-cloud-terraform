@@ -107,7 +107,6 @@ terraform apply tfplan
 ## Known Issues
 - COS Support: This plan does not create integrations for the grafana agent charm. This is because the Juju Terraform provider [does not](https://github.com/juju/terraform-provider-juju/issues/119) support cross-controller model relations.
 - `var.constraints` may not work properly and needs to be specified to keep terraform consistent even when default constraints are being filled by Juju. [#344](https://github.com/juju/terraform-provider-juju/issues/344), [#632](https://github.com/juju/terraform-provider-juju/issues/632)
-- The plan currently cannot make use of `placements` as offered by bundles since they do not work correctly. [#443](https://github.com/juju/terraform-provider-juju/issues/443)
 - The plan might see failures from juju when running terraform with default parallelism. It is recommended to run terraform with `-parallelism=1` for most consistent results.
 
 ## Contributing

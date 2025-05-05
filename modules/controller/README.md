@@ -14,12 +14,6 @@ includes:
 - Certificate Authority (CA: Self-signed-certificates)
 - Anbox Cloud Dashboard
 
-### Some limitations of the plan
-
-* The terraform plan does not support deploying juju applications on the same machine.
-This is due to the fact that `placement` support for juju application is currently
-a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443).
-
 ## Requirements
 
 | Name | Version |
@@ -52,6 +46,7 @@ No modules.
 | [juju_integration.gateway_cos](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.gateway_nats](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.nats_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_machine.controller_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_model.controller](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/model) | resource |
 | [juju_offer.nats_offer](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/offer) | resource |
 

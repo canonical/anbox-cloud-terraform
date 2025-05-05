@@ -18,7 +18,7 @@ resource "juju_application" "lxd" {
     ua_token = var.ubuntu_pro_token
   }
 
-  units = var.lxd_nodes
+  machines = juju_machine.lxd_node[*].machine_id
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
@@ -37,11 +37,6 @@ resource "juju_application" "ams_node_controller" {
     channel = var.channel
     base    = local.base
   }
-
-  // The provider currently does not know properly about subordinate charms
-  // So we specify 0 units as this will get attached automatically to the
-  // principal charm after relation.
-  units = 0
 
   config = {
     port            = "10000-11000"
@@ -76,4 +71,12 @@ resource "juju_integration" "ams_lxd" {
     name     = juju_application.lxd.name
     endpoint = "api"
   }
+}
+
+resource "juju_machine" "lxd_node" {
+  model       = juju_model.subcluster.name
+  count       = var.lxd_nodes
+  base        = local.base
+  name        = "lxd-${count.index}"
+  constraints = join(" ", var.constraints)
 }

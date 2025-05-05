@@ -10,8 +10,3 @@ juju model.
 includes:
 - AAR (Anbox Application Registry)
 
-### Some limitations of the plan
-
-* The terraform plan does not support deploying juju applications on the same machine.
-This is due to the fact that `placement` support for juju application is currently
-a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443).

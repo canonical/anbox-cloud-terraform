@@ -22,12 +22,6 @@ input variable `var.lxd_nodes`.
 * Each LXD node is accompanied by a subordinate charm `ams-node-controller` to
 setup network rules properly on the lxd node.
 
-### Some limitations of the plan
-
-* The terraform plan does not support deploying juju applications on the same machine.
-This is due to the fact that `placement` support for juju application is currently
-a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443).
-
 ## Requirements
 
 | Name | Version |
@@ -67,6 +61,9 @@ No modules.
 | [juju_integration.coturn_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ip_table_rules](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_machine.ams_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
+| [juju_machine.db_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
+| [juju_machine.lxd_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_model.subcluster](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/model) | resource |
 | [juju_offer.ams_offer](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/offer) | resource |
 
