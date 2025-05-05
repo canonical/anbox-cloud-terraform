@@ -88,6 +88,22 @@ resource "juju_application" "ca" {
   machines = juju_machine.ams_node[*].machine_id
 }
 
+resource "juju_application" "etcd_ca" {
+  count = var.external_etcd ? 1 : 0
+  name  = "etcd-ca"
+
+  model       = juju_model.subcluster.name
+  constraints = join(" ", var.constraints)
+
+  charm {
+    name    = "easyrsa"
+    channel = "latest/stable"
+    base    = local.base
+  }
+
+  machines = juju_machine.db_node[*].machine_id
+}
+
 resource "juju_integration" "ams_db" {
   count = var.external_etcd ? 1 : 0
   model = juju_model.subcluster.name
@@ -108,7 +124,7 @@ resource "juju_integration" "etcd_ca" {
   model = juju_model.subcluster.name
 
   application {
-    name     = juju_application.ca.name
+    name     = one(juju_application.etcd_ca[*].name)
     endpoint = "client"
   }
 
