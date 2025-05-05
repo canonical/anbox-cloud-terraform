@@ -57,7 +57,9 @@ cross model relations.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_anbox_models"></a> [anbox\_models](#output\_anbox\_models) | Name of the models created for Anbox Cloud |
 
 ## Usage
 The module can deploy a number of anbox subclusters per juju region using the

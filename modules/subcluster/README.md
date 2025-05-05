@@ -33,7 +33,7 @@ setup network rules properly on the lxd node.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.18.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
 
 ## Modules
 
@@ -50,6 +50,7 @@ No modules.
 | [juju_application.cos_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.coturn](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.etcd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
+| [juju_application.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_integration.agent_ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.agent_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |

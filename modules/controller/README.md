@@ -25,7 +25,7 @@ includes:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.18.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
 
 ## Modules
 

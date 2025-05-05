@@ -51,5 +51,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_client_offer_url"></a> [client\_offer\_url](#output\_client\_offer\_url) | Juju Offer URL for connecting to AAR in `client` mode. |
+| <a name="output_model_name"></a> [model\_name](#output\_model\_name) | Model name created for Anbox Application Registry |
 | <a name="output_publisher_offer_url"></a> [publisher\_offer\_url](#output\_publisher\_offer\_url) | Juju Offer URL for connecting to AAR in `publisher` mode. |
 <!-- END_TF_DOCS -->
