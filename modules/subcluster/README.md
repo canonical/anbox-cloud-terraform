@@ -33,7 +33,7 @@ a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443)
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.18.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.19.0 |
 
 ## Providers
 
