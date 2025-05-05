@@ -25,14 +25,13 @@ resource "juju_application" "ams" {
 
   model       = juju_model.subcluster.name
   constraints = join(" ", var.constraints)
+  machines    = juju_machine.ams_node[*].machine_id
 
   charm {
     name    = "ams"
     channel = var.channel
     base    = local.base
   }
-
-  units = local.num_units
 
   config = {
     ua_token          = var.ubuntu_pro_token
@@ -65,7 +64,7 @@ resource "juju_application" "etcd" {
     channel = "3.4/stable"
   }
 
-  units = local.num_units
+  machines = juju_machine.db_node[*].machine_id
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
@@ -86,7 +85,7 @@ resource "juju_application" "ca" {
     base    = local.base
   }
 
-  units = local.num_units
+  machines = juju_machine.ams_node[*].machine_id
 }
 
 resource "juju_integration" "ams_db" {
@@ -131,7 +130,7 @@ resource "juju_application" "agent" {
     base    = local.base
   }
 
-  units = local.num_units
+  machines = juju_machine.ams_node[*].machine_id
 
   config = {
     ua_token        = var.ubuntu_pro_token
@@ -161,7 +160,7 @@ resource "juju_application" "coturn" {
     channel = var.channel
   }
 
-  units = local.num_units
+  machines = juju_machine.ams_node[*].machine_id
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -261,8 +260,6 @@ resource "juju_application" "cos_agent" {
     base = local.base
   }
 
-  units = 0
-
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
@@ -286,3 +283,18 @@ resource "juju_integration" "ams_cos" {
   }
 }
 
+resource "juju_machine" "ams_node" {
+  model       = juju_model.subcluster.name
+  count       = local.num_units
+  base        = local.base
+  name        = "ams-${count.index}"
+  constraints = join(" ", var.constraints)
+}
+
+resource "juju_machine" "db_node" {
+  count       = var.external_etcd ? local.num_units : 0
+  model       = juju_model.subcluster.name
+  base        = local.base
+  name        = "db-${count.index}"
+  constraints = join(" ", var.constraints)
+}
