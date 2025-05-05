@@ -15,6 +15,10 @@ run "test_base_controller_resources" {
     error_message = "Model not created in controller."
   }
   assert {
+    condition     = length(juju_machine.controller_node) == 1
+    error_message = "NATS not deployed in controller."
+  }
+  assert {
     condition     = length(juju_application.nats) > 0
     error_message = "NATS not deployed in controller."
   }
@@ -58,6 +62,10 @@ run "test_ha_deployment" {
     enable_ha = true
   }
   assert {
+    condition     = length(juju_machine.controller_node) == 3
+    error_message = "NATS not deployed in controller."
+  }
+  assert {
     condition     = length(juju_model.controller) > 0
     error_message = "Model not created in controller."
   }
@@ -72,6 +80,10 @@ run "test_ha_deployment" {
   assert {
     condition     = length(juju_application.gateway) > 0
     error_message = "Gateway not deployed in controller."
+  }
+  assert {
+    condition     = juju_application.gateway.units == 3
+    error_message = "HA for gateway must deploy 3 units"
   }
   assert {
     condition     = length(juju_application.dashboard) > 0
