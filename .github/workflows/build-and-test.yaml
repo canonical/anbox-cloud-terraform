@@ -31,9 +31,13 @@ jobs:
           tflint --init
           # Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
           tflint -f compact --recursive
-  Test:
+
+  tests:
     name: Run terraform tests
-    runs-on: [self-hosted, linux, ARM64, jammy, medium]
+    runs-on: [self-hosted, linux, X64, jammy, large]
+    env:
+      UBUNTU_PRO_TOKEN: ${{ secrets.UBUNTU_PRO_TOKEN }}
+      ANBOX_CHANNEL: 1.26/stable
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -44,10 +48,10 @@ jobs:
         uses: charmed-kubernetes/actions-operator@1c7c9a30d7d233e26e7a4fc1505cc44bbd937229
         with:
           provider: lxd
-      - name: Run Main Module Tests
+      - name: Run Main Module Unit Tests
         run: |
           terraform init && terraform test
-      - name: Run Subcluster Module Tests
+      - name: Run Submodule Unit Tests
         working-directory: ./modules
         run: |
           set -e
@@ -56,3 +60,30 @@ jobs:
             terraform init && terraform test
             popd
           done
+      - name: Deploy Main Plan
+        run: |
+          cat <<EOF > ci.tfvars
+          anbox_channel  = "${ANBOX_CHANNEL}"
+          subclusters = [
+            {
+              name           = "a"
+              lxd_node_count = 1
+              registry = {
+                mode   = "client"
+              }
+            }
+          ]
+          deploy_registry=true
+          EOF
+
+          terraform init && terraform apply -parallelism=1 -auto-approve -var "ubuntu_pro_token=${UBUNTU_PRO_TOKEN}" -var-file='ci.tfvars'
+
+      - name: Wait for models to get active
+        run: |
+          models="$( terraform output -json anbox_models | jq -r '.[] | @sh' | tr -d \' )"
+          for model in $models; do
+              juju wait-for model $model --query='life=="alive" && status=="available" && forEach(applications, app => app.status == "active")' &
+          done
+          wait
+          echo "All models deployed successfully"
+
