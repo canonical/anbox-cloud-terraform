@@ -54,6 +54,7 @@ jobs:
           set -eo pipefail
           for module in ./*; do
             pushd $module
+            echo "===== Testing $module ====="
             terraform init && terraform test
             popd
           done
@@ -81,6 +82,7 @@ jobs:
       - name: Wait for models to get active
         run: |
           set -e
+          pids=()
           models="$( terraform output -json anbox_models | jq -r '.[] | @sh' | tr -d \' )"
           for model in $models; do
               juju wait-for model $model --query='life=="alive" && status=="available" && forEach(units, unit => unit.workload-status == "active")' --timeout 30m &
@@ -98,12 +100,6 @@ jobs:
               exit 1
             fi
           done
-          if ! wait; then
-            mkdir logs/
-            for model in $models; do
-              juju status -m $model
-              juju crashdump -o logs/
-            done
 
           echo "All models deployed successfully"
 

@@ -80,7 +80,6 @@ No modules.
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_suffix"></a> [model\_suffix](#input\_model\_suffix) | Suffix to attach for model | `string` | n/a | yes |
 | <a name="input_registry_config"></a> [registry\_config](#input\_registry\_config) | Object to represent connection details for connecting to anbox registry | <pre>object({<br/>    mode      = string<br/>    offer_url = string<br/>  })</pre> | `null` | no |
-| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
 
 ## Outputs
 
