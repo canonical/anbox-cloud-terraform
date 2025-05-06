@@ -56,7 +56,6 @@ resource "juju_application" "gateway" {
   machines = juju_machine.controller_node[*].machine_id
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 
@@ -81,7 +80,6 @@ resource "juju_application" "dashboard" {
   }
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 

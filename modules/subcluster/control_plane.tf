@@ -34,7 +34,6 @@ resource "juju_application" "ams" {
   }
 
   config = {
-    ua_token          = var.ubuntu_pro_token
     use_embedded_etcd = !var.external_etcd
     snap_risk_level   = local.risk
   }
@@ -149,7 +148,6 @@ resource "juju_application" "agent" {
   machines = juju_machine.ams_node[*].machine_id
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     region          = "cloud-0"
     snap_risk_level = local.risk
   }

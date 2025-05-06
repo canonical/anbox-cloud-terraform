@@ -5,9 +5,8 @@
 run "test_external_etcd_enabled" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "test-model"
-    external_etcd    = true
+    model_suffix  = "test-model"
+    external_etcd = true
   }
 
   assert {
