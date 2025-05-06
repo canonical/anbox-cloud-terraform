@@ -59,7 +59,7 @@ jobs:
           done
       - name: Deploy Main Plan
         env:
-          ANBOX_CHANNEL: 1.26/stable
+          ANBOX_CHANNEL: 1.26/edge
         run: |
           cat <<EOF > ci.tfvars
           anbox_channel  = "${ANBOX_CHANNEL}"
@@ -73,6 +73,7 @@ jobs:
             }
           ]
           deploy_registry=true
+          constraints=["arch=amd64"]
           EOF
 
           terraform init && terraform apply -parallelism=1 -auto-approve -var-file='ci.tfvars'
