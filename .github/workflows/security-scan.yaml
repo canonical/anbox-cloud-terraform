@@ -35,7 +35,6 @@ jobs:
     - name: Create terraform Plan
       run: |
         cat <<EOF > default.auto.tfvars
-        ubuntu_pro_token = "abc"
         anbox_channel  = "1.26/stable"
         subclusters = [
           {

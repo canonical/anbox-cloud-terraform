@@ -14,10 +14,6 @@ resource "juju_application" "lxd" {
     base    = local.base
   }
 
-  config = {
-    ua_token = var.ubuntu_pro_token
-  }
-
   machines = juju_machine.lxd_node[*].machine_id
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -40,7 +36,6 @@ resource "juju_application" "ams_node_controller" {
 
   config = {
     port            = "10000-11000"
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 }

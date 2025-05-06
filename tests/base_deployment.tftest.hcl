@@ -5,18 +5,16 @@
 run "test_required_variables" {
   command = plan
   variables {
-    ubuntu_pro_token = ""
-    anbox_channel    = ""
-    subclusters      = []
+    anbox_channel = ""
+    subclusters   = []
   }
-  expect_failures = [var.ubuntu_pro_token, var.anbox_channel, var.subclusters]
+  expect_failures = [var.anbox_channel, var.subclusters]
 }
 
 run "test_models_per_subcluster" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    anbox_channel    = "1.26/edge"
+    anbox_channel = "1.26/edge"
     subclusters = [{
       name           = "a"
       lxd_node_count = 1

@@ -3,9 +3,8 @@
 //
 
 variables {
-  ubuntu_pro_token = "token"
-  channel          = "1.26/stable"
-  constraints      = [""]
+  channel     = "1.26/stable"
+  constraints = [""]
 }
 
 run "test_base_controller_resources" {

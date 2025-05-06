@@ -5,8 +5,7 @@
 run "test_registry" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    anbox_channel    = "1.26/edge"
+    anbox_channel = "1.26/edge"
     subclusters = [{
       name           = "a"
       lxd_node_count = 1

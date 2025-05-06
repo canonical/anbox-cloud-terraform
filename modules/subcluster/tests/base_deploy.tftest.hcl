@@ -2,20 +2,10 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
-run "test_required_variables" {
-  command = plan
-  variables {
-    ubuntu_pro_token = ""
-    model_suffix     = ""
-  }
-  expect_failures = [var.ubuntu_pro_token]
-}
-
 run "test_model_name" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "a"
+    model_suffix = "a"
   }
   assert {
     condition     = juju_model.subcluster.name == "anbox-subcluster-a"
@@ -26,8 +16,7 @@ run "test_model_name" {
 run "test_default_lxd_nodes" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "-a"
+    model_suffix = "-a"
   }
   assert {
     condition     = juju_application.lxd.units > 0
@@ -38,9 +27,8 @@ run "test_default_lxd_nodes" {
 run "test_lxd_nodes_scale" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "-a"
-    lxd_nodes        = 3
+    model_suffix = "-a"
+    lxd_nodes    = 3
   }
   assert {
     condition     = juju_application.lxd.units == 3
@@ -55,8 +43,7 @@ run "test_lxd_nodes_scale" {
 run "test_external_etcd_disabled" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "-a"
+    model_suffix = "-a"
   }
   assert {
     condition     = length(juju_machine.db_node) == 0
@@ -79,8 +66,7 @@ run "test_external_etcd_disabled" {
 run "test_base_deployment_layout" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "-a"
+    model_suffix = "-a"
   }
   assert {
     condition     = length(juju_machine.ams_node) == 1
@@ -155,9 +141,8 @@ run "test_base_deployment_layout" {
 run "test_registry" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "a"
-    registry_config  = { mode = "client", offer_url = "client_url" }
+    model_suffix    = "a"
+    registry_config = { mode = "client", offer_url = "client_url" }
   }
   assert {
     condition     = length(juju_integration.ams_aar) > 0

@@ -1,15 +1,6 @@
 //
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
-variable "ubuntu_pro_token" {
-  description = "Pro token used for anbox services"
-  type        = string
-  sensitive   = true
-  validation {
-    condition     = length(var.ubuntu_pro_token) > 0
-    error_message = "Ubuntu Pro Token should not be empty"
-  }
-}
 
 variable "constraints" {
   description = "List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>`"

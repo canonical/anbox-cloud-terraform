@@ -34,7 +34,6 @@ resource "juju_application" "aar" {
   units = local.num_units
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 
