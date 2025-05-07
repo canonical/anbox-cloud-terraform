@@ -11,7 +11,7 @@ juju model.
 * The control plane currently includes:
 - AMS
 - ETCD (optional)
-- EasyRSA (optional)
+- Self-signed-certificates (optional)
 - Anbox Stream Agent
 - Coturn
 * The data plan includes:

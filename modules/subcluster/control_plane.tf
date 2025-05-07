@@ -81,7 +81,7 @@ resource "juju_application" "ca" {
   constraints = join(" ", var.constraints)
 
   charm {
-    name    = "easyrsa"
+    name    = "self-signed-certificates"
     channel = "latest/stable"
     base    = local.base
   }

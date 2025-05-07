@@ -11,7 +11,7 @@ juju model.
 includes:
 - NATS
 - Anbox Cloud Gateway
-- Certificate Authority (CA: EasyRSA)
+- Certificate Authority (CA: Self-signed-certificates)
 - Anbox Cloud Dashboard
 
 ### Some limitations of the plan
