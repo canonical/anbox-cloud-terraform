@@ -20,13 +20,13 @@ cross model relations.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.18.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.19.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.18.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
 
 ## Modules
 
@@ -53,11 +53,12 @@ cross model relations.
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
 | <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | List of subclusters to deploy. | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      mode = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
-| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used for anbox services | `string` | n/a | yes |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_anbox_models"></a> [anbox\_models](#output\_anbox\_models) | Name of the models created for Anbox Cloud |
 
 ## Usage
 The module can deploy a number of anbox subclusters per juju region using the
@@ -107,7 +108,6 @@ terraform apply tfplan
 ## Known Issues
 - COS Support: This plan does not create integrations for the grafana agent charm. This is because the Juju Terraform provider [does not](https://github.com/juju/terraform-provider-juju/issues/119) support cross-controller model relations.
 - `var.constraints` may not work properly and needs to be specified to keep terraform consistent even when default constraints are being filled by Juju. [#344](https://github.com/juju/terraform-provider-juju/issues/344), [#632](https://github.com/juju/terraform-provider-juju/issues/632)
-- The plan currently cannot make use of `placements` as offered by bundles since they do not work correctly. [#443](https://github.com/juju/terraform-provider-juju/issues/443)
 - The plan might see failures from juju when running terraform with default parallelism. It is recommended to run terraform with `-parallelism=1` for most consistent results.
 
 ## Contributing

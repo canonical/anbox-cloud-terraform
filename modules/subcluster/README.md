@@ -22,24 +22,18 @@ input variable `var.lxd_nodes`.
 * Each LXD node is accompanied by a subordinate charm `ams-node-controller` to
 setup network rules properly on the lxd node.
 
-### Some limitations of the plan
-
-* The terraform plan does not support deploying juju applications on the same machine.
-This is due to the fact that `placement` support for juju application is currently
-a known issue [#443](https://github.com/juju/terraform-provider-juju/issues/443).
-
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.18.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.19.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.18.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
 
 ## Modules
 
@@ -56,6 +50,7 @@ No modules.
 | [juju_application.cos_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.coturn](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.etcd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
+| [juju_application.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_integration.agent_ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.agent_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
@@ -67,6 +62,9 @@ No modules.
 | [juju_integration.coturn_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.ip_table_rules](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_machine.ams_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
+| [juju_machine.db_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
+| [juju_machine.lxd_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_model.subcluster](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/model) | resource |
 | [juju_offer.ams_offer](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/offer) | resource |
 
@@ -82,7 +80,6 @@ No modules.
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_suffix"></a> [model\_suffix](#input\_model\_suffix) | Suffix to attach for model | `string` | n/a | yes |
 | <a name="input_registry_config"></a> [registry\_config](#input\_registry\_config) | Object to represent connection details for connecting to anbox registry | <pre>object({<br/>    mode      = string<br/>    offer_url = string<br/>  })</pre> | `null` | no |
-| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Pro token used to deploy AMS charm | `string` | n/a | yes |
 
 ## Outputs
 

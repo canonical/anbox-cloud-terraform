@@ -31,7 +31,7 @@ resource "juju_application" "nats" {
     base    = local.base
   }
 
-  units = local.num_units
+  machines = juju_machine.controller_node[*].machine_id
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -53,10 +53,9 @@ resource "juju_application" "gateway" {
     base    = local.base
   }
 
-  units = local.num_units
+  machines = juju_machine.controller_node[*].machine_id
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 
@@ -81,11 +80,10 @@ resource "juju_application" "dashboard" {
   }
 
   config = {
-    ua_token        = var.ubuntu_pro_token
     snap_risk_level = local.risk
   }
 
-  units = local.num_units
+  machines = juju_machine.controller_node[*].machine_id
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -107,7 +105,7 @@ resource "juju_application" "ca" {
     channel = "latest/stable"
   }
 
-  units = local.num_units
+  machines = juju_machine.controller_node[*].machine_id
 
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
@@ -205,8 +203,6 @@ resource "juju_application" "cos_agent" {
     base = local.base
   }
 
-  units = 0
-
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
@@ -228,4 +224,13 @@ resource "juju_integration" "gateway_cos" {
     name     = one(juju_application.cos_agent[*].name)
     endpoint = "cos-agent"
   }
+}
+
+
+resource "juju_machine" "controller_node" {
+  model       = juju_model.controller.name
+  count       = local.num_units
+  base        = local.base
+  name        = "anbox-controller-${count.index}"
+  constraints = join(" ", var.constraints)
 }
