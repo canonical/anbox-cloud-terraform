@@ -218,7 +218,7 @@ resource "juju_integration" "agent_ca" {
 
   application {
     name     = juju_application.ca.name
-    endpoint = "client"
+    endpoint = "certificates"
   }
 
   application {
