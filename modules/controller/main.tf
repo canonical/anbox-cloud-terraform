@@ -149,7 +149,7 @@ resource "juju_integration" "nats_ca" {
 
   application {
     name     = juju_application.ca.name
-    endpoint = "client"
+    endpoint = "certificates"
   }
 
   application {
@@ -163,7 +163,7 @@ resource "juju_integration" "gateway_ca" {
 
   application {
     name     = juju_application.ca.name
-    endpoint = "client"
+    endpoint = "certificates"
   }
 
   application {
@@ -177,7 +177,7 @@ resource "juju_integration" "dashboard_ca" {
 
   application {
     name     = juju_application.ca.name
-    endpoint = "client"
+    endpoint = "certificates"
   }
 
   application {
