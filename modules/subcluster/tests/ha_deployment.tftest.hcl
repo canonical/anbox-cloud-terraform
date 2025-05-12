@@ -5,9 +5,8 @@
 run "test_ha_deployment" {
   command = plan
   variables {
-    ubuntu_pro_token = "token"
-    model_suffix     = "-a"
-    enable_ha        = true
+    model_suffix = "-a"
+    enable_ha    = true
   }
   assert {
     condition     = length(juju_model.subcluster) > 0

@@ -10,16 +10,15 @@ locals {
 }
 
 module "subcluster" {
-  for_each         = local.subcluster_config_map
-  source           = "./modules/subcluster"
-  model_suffix     = each.key
-  ubuntu_pro_token = var.ubuntu_pro_token
-  channel          = var.anbox_channel
-  external_etcd    = true
-  constraints      = var.constraints
-  enable_ha        = var.enable_ha
-  registry_config  = each.value.registry_config
-  enable_cos       = var.enable_cos
+  for_each        = local.subcluster_config_map
+  source          = "./modules/subcluster"
+  model_suffix    = each.key
+  channel         = var.anbox_channel
+  external_etcd   = true
+  constraints     = var.constraints
+  enable_ha       = var.enable_ha
+  registry_config = each.value.registry_config
+  enable_cos      = var.enable_cos
 
   // We let the `lxd_node_count` value override the HA configuration for number
   // of LXD nodes.
@@ -27,21 +26,19 @@ module "subcluster" {
 }
 
 module "controller" {
-  source           = "./modules/controller"
-  ubuntu_pro_token = var.ubuntu_pro_token
-  channel          = var.anbox_channel
-  constraints      = var.constraints
-  enable_ha        = var.enable_ha
-  enable_cos       = var.enable_cos
+  source      = "./modules/controller"
+  channel     = var.anbox_channel
+  constraints = var.constraints
+  enable_ha   = var.enable_ha
+  enable_cos  = var.enable_cos
 }
 
 module "registry" {
-  count            = var.deploy_registry ? 1 : 0
-  source           = "./modules/registry"
-  ubuntu_pro_token = var.ubuntu_pro_token
-  channel          = var.anbox_channel
-  constraints      = var.constraints
-  enable_ha        = var.enable_ha
+  count       = var.deploy_registry ? 1 : 0
+  source      = "./modules/registry"
+  channel     = var.anbox_channel
+  constraints = var.constraints
+  enable_ha   = var.enable_ha
 }
 
 resource "juju_integration" "agent_nats_cmr" {
