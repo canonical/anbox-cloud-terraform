@@ -27,7 +27,7 @@ resource "juju_application" "nats" {
 
   charm {
     name    = "nats"
-    channel = "latest/stable"
+    channel = "latest/edge"
     base    = local.base
   }
 
