@@ -3,8 +3,9 @@
 //
 
 variables {
-  channel     = "1.26/stable"
-  constraints = [""]
+  channel        = "1.26/stable"
+  constraints    = [""]
+  ssh_public_key = "ssh-rsa test-key a@b"
 }
 
 run "test_base_controller_resources" {
@@ -12,6 +13,10 @@ run "test_base_controller_resources" {
   assert {
     condition     = length(juju_model.controller) > 0
     error_message = "Model not created in controller."
+  }
+  assert {
+    condition     = length(juju_ssh_key.this) > 0
+    error_message = "SSH Key not imported in the model."
   }
   assert {
     condition     = length(juju_machine.controller_node) == 1

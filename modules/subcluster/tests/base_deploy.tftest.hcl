@@ -66,11 +66,16 @@ run "test_external_etcd_disabled" {
 run "test_base_deployment_layout" {
   command = plan
   variables {
-    model_suffix = "-a"
+    model_suffix   = "-a"
+    ssh_public_key = "ssh-rsa test-key a@b"
   }
   assert {
     condition     = length(juju_machine.ams_node) == 1
     error_message = "A separate machine should be created for AMS."
+  }
+  assert {
+    condition     = length(juju_ssh_key.this) > 0
+    error_message = "SSH Key not imported in the model."
   }
   assert {
     condition     = length(juju_machine.lxd_node) == 1

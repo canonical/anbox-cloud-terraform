@@ -20,6 +20,12 @@ resource "juju_model" "subcluster" {
   }
 }
 
+resource "juju_ssh_key" "this" {
+  count   = length(var.ssh_public_key) > 0 ? 1 : 0
+  model   = juju_model.subcluster.name
+  payload = trim(var.ssh_public_key, "\n")
+}
+
 resource "juju_application" "ams" {
   name = "ams"
 

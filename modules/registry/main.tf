@@ -18,6 +18,11 @@ resource "juju_model" "registry" {
   }
 }
 
+resource "juju_ssh_key" "this" {
+  count   = length(var.ssh_public_key) > 0 ? 1 : 0
+  model   = juju_model.registry.name
+  payload = trim(var.ssh_public_key, "\n")
+}
 
 resource "juju_application" "aar" {
   name = "aar"

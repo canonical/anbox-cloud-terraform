@@ -26,3 +26,9 @@ variable "enable_cos" {
   default     = false
 }
 
+variable "ssh_public_key" {
+  description = "SSH key to be imported in the juju models. No key is imported by default."
+  type        = string
+  default     = ""
+}
+

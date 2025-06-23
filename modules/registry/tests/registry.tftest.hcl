@@ -6,6 +6,7 @@ variables {
   ubuntu_pro_token = "token"
   channel          = "1.26/stable"
   constraints      = [""]
+  ssh_public_key   = "ssh-rsa key a@b"
 }
 
 run "test_base_controller_resources" {
@@ -17,6 +18,10 @@ run "test_base_controller_resources" {
   assert {
     condition     = length(juju_application.aar) > 0
     error_message = "AAR should be deployed."
+  }
+  assert {
+    condition     = length(juju_ssh_key.this) > 0
+    error_message = "SSH Key not imported in the model."
   }
 }
 

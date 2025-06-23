@@ -55,3 +55,10 @@ variable "deploy_registry" {
   type        = bool
   default     = false
 }
+
+variable "ssh_key_path" {
+  description = "Path to the SSH key to be imported in the juju models. No key is imported by default."
+  type        = string
+  default     = ""
+}
+
