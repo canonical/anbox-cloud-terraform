@@ -19,6 +19,7 @@ subclusters = [
     }
   }
 ]
+ssh_key_path = "~/.ssh/id_rsa.pub"
 deploy_registry = true
 enable_ha = false
 enable_cos = false

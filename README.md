@@ -52,6 +52,7 @@ cross model relations.
 | <a name="input_deploy_registry"></a> [deploy\_registry](#input\_deploy\_registry) | Deploy the Anbox Application Registry | `bool` | `false` | no |
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
+| <a name="input_ssh_key_path"></a> [ssh\_key\_path](#input\_ssh\_key\_path) | Path to the SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 | <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | List of subclusters to deploy. | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      mode = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
@@ -81,6 +82,7 @@ subclusters = [
     }
   }
 ]
+ssh_key_path = "~/.ssh/id_rsa.pub"
 deploy_registry = true
 enable_ha = false
 enable_cos = false

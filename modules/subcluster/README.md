@@ -67,6 +67,7 @@ No modules.
 | [juju_machine.lxd_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_model.subcluster](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/model) | resource |
 | [juju_offer.ams_offer](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/offer) | resource |
+| [juju_ssh_key.this](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/ssh_key) | resource |
 
 ## Inputs
 
@@ -80,6 +81,7 @@ No modules.
 | <a name="input_lxd_nodes"></a> [lxd\_nodes](#input\_lxd\_nodes) | Channel for the deployed charm | `number` | `1` | no |
 | <a name="input_model_suffix"></a> [model\_suffix](#input\_model\_suffix) | Suffix to attach for model | `string` | n/a | yes |
 | <a name="input_registry_config"></a> [registry\_config](#input\_registry\_config) | Object to represent connection details for connecting to anbox registry | <pre>object({<br/>    mode      = string<br/>    offer_url = string<br/>  })</pre> | `null` | no |
+| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 
 ## Outputs
 
