@@ -60,7 +60,7 @@ jobs:
           done
       - name: Deploy Main Plan
         env:
-          ANBOX_CHANNEL: 1.26/edge
+          ANBOX_CHANNEL: 1.27/stable
         run: |
           cat <<EOF > ci.tfvars
           anbox_channel  = "${ANBOX_CHANNEL}"

@@ -14,7 +14,7 @@ run "test_required_variables" {
 run "test_models_per_subcluster" {
   command = plan
   variables {
-    anbox_channel = "1.26/edge"
+    anbox_channel = "1.27/stable"
     subclusters = [{
       name           = "a"
       lxd_node_count = 1
