@@ -72,7 +72,7 @@ variable `var.subclusters_per_region`. To execute the terraform plan:
 
 ```tfvars
 ubuntu_pro_token = "<pro_token_here>"
-anbox_channel    = "1.26/edge"
+anbox_channel    = "1.27/stable"
 subclusters = [
   {
     name           = "a"

@@ -35,7 +35,7 @@ jobs:
     - name: Create terraform Plan
       run: |
         cat <<EOF > default.auto.tfvars
-        anbox_channel  = "1.26/stable"
+        anbox_channel  = "1.27/stable"
         subclusters = [
           {
             name           = "a"
