@@ -23,37 +23,6 @@ resource "juju_application" "lxd" {
   }
 }
 
-resource "juju_application" "ams_node_controller" {
-  name = "ams-node-controller"
-
-  model = juju_model.subcluster.name
-
-  charm {
-    name    = "ams-node-controller"
-    channel = var.channel
-    base    = local.base
-  }
-
-  config = {
-    port            = "10000-11000"
-    snap_risk_level = local.risk
-  }
-}
-
-resource "juju_integration" "ip_table_rules" {
-  model = juju_model.subcluster.name
-
-  application {
-    name     = juju_application.ams_node_controller.name
-    endpoint = "lxd"
-  }
-
-  application {
-    name     = juju_application.lxd.name
-    endpoint = "api"
-  }
-}
-
 resource "juju_integration" "ams_lxd" {
   model = juju_model.subcluster.name
 

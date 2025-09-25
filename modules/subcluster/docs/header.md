@@ -15,7 +15,6 @@ juju model.
 - Coturn
 * The data plan includes:
 - LXD
-- AMS-Node-Controller
 * This module can deploy a number of LXD machines to act as nodes to AMS using the
 input variable `var.lxd_nodes`.
 * Each LXD node is accompanied by a subordinate charm `ams-node-controller` to
