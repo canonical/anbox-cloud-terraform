@@ -64,12 +64,4 @@ run "test_ha_deployment" {
     condition     = length(juju_integration.ams_lxd) > 0
     error_message = "AMS should be related to LXD"
   }
-  assert {
-    condition     = length(juju_integration.ip_table_rules) > 0
-    error_message = "LXD should be related to AMS Node Controller"
-  }
-  assert {
-    condition     = length(juju_application.ams_node_controller) > 0
-    error_message = "AMS Node Controller should be deployed by default."
-  }
 }

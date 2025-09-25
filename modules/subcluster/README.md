@@ -16,7 +16,6 @@ juju model.
 - Coturn
 * The data plan includes:
 - LXD
-- AMS-Node-Controller
 * This module can deploy a number of LXD machines to act as nodes to AMS using the
 input variable `var.lxd_nodes`.
 * Each LXD node is accompanied by a subordinate charm `ams-node-controller` to
@@ -45,7 +44,6 @@ No modules.
 |------|------|
 | [juju_application.agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ams](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
-| [juju_application.ams_node_controller](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.cos_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.coturn](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
@@ -61,7 +59,6 @@ No modules.
 | [juju_integration.ams_lxd](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.coturn_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.etcd_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
-| [juju_integration.ip_table_rules](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_machine.ams_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_machine.db_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
 | [juju_machine.lxd_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |

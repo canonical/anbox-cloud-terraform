@@ -126,16 +126,8 @@ run "test_base_deployment_layout" {
     error_message = "AMS should be related to LXD."
   }
   assert {
-    condition     = length(juju_integration.ip_table_rules) > 0
-    error_message = "LXD should be related to AMS Node Controller."
-  }
-  assert {
     condition     = juju_application.lxd.units == 1
     error_message = "Default number of lxd nodes should be 1."
-  }
-  assert {
-    condition     = length(juju_application.ams_node_controller) > 0
-    error_message = "AMS Node Controller should be deployed by default."
   }
   assert {
     condition     = length(juju_integration.ams_aar) == 0
