@@ -32,3 +32,8 @@ variable "ssh_public_key" {
   default     = ""
 }
 
+variable "ubuntu_pro_token" {
+  description = "Ubuntu Advantage token that is received with your license of Anbox Cloud."
+  type        = string
+  default     = ""
+}

@@ -38,10 +38,10 @@ resource "juju_application" "ams" {
     channel = var.channel
     base    = local.base
   }
-
   config = {
     use_embedded_etcd = !var.external_etcd
     snap_risk_level   = local.risk
+    ua_token          = var.ubuntu_pro_token
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -156,6 +156,7 @@ resource "juju_application" "agent" {
   config = {
     region          = "cloud-0"
     snap_risk_level = local.risk
+    ua_token        = var.ubuntu_pro_token
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
