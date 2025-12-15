@@ -62,6 +62,7 @@ resource "juju_application" "gateway" {
 
   config = {
     snap_risk_level = local.risk
+    ua_token        = var.ubuntu_pro_token
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -86,6 +87,7 @@ resource "juju_application" "dashboard" {
 
   config = {
     snap_risk_level = local.risk
+    ua_token        = var.ubuntu_pro_token
   }
 
   machines = juju_machine.controller_node[*].machine_id

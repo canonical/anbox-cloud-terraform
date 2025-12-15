@@ -6,6 +6,7 @@ provider "registry.terraform.io/juju/juju" {
   constraints = "~> 0.19.0"
   hashes = [
     "h1:QzSjUIELE2QEsZCYrOSMrCopgasqwJpmzjgsc++igrM=",
+    "h1:sWo4pFb0CYEqLFX2OF/ObAB8vZFZUgL/lceamTLyHsc=",
     "zh:1d5c0b2671052bbc4600dae6b07bd5d0ca0ca492e2b8c408e3358518cca419dd",
     "zh:26b8f4e409d22ab21ed4a9d192a8d40f3887bf0ac1865b427102327ccec30502",
     "zh:3e52068e40067ab8f68ee12a56e733fe73180050c0e9644da87ded6a1eab0d1a",

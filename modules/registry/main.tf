@@ -40,6 +40,7 @@ resource "juju_application" "aar" {
 
   config = {
     snap_risk_level = local.risk
+    ua_token        = var.ubuntu_pro_token
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using

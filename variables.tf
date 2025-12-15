@@ -38,6 +38,12 @@ variable "subclusters" {
   }
 }
 
+variable "ubuntu_pro_token" {
+  description = "Ubuntu Advantage token that is received with your license of Anbox Cloud."
+  type        = string
+  default     = ""
+}
+
 variable "enable_cos" {
   description = "Enable cos integration by deploying grafana-agent charm."
   type        = bool
