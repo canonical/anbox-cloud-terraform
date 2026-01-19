@@ -60,13 +60,9 @@ resource "juju_application" "etcd" {
   constraints = join(" ", var.constraints)
 
   charm {
-    name    = "etcd"
-    channel = "latest/stable"
+    name    = "charmed-etcd"
+    channel = "3.6/stable"
     base    = local.base
-  }
-
-  config = {
-    channel = "3.4/stable"
   }
 
   machines = juju_machine.db_node[*].machine_id
@@ -86,7 +82,7 @@ resource "juju_application" "ca" {
 
   charm {
     name    = "self-signed-certificates"
-    channel = "latest/stable"
+    channel = "1/stable"
     base    = local.base
   }
 
@@ -101,8 +97,8 @@ resource "juju_application" "etcd_ca" {
   constraints = join(" ", var.constraints)
 
   charm {
-    name    = "easyrsa"
-    channel = "latest/stable"
+    name    = "self-signed-certificates"
+    channel = "1/stable"
     base    = local.base
   }
 
@@ -115,12 +111,12 @@ resource "juju_integration" "ams_db" {
 
   application {
     name     = juju_application.ams.name
-    endpoint = "etcd"
+    endpoint = "etcd-client"
   }
 
   application {
     name     = one(juju_application.etcd[*].name)
-    endpoint = "db"
+    endpoint = "etcd-client"
   }
 }
 
@@ -130,12 +126,12 @@ resource "juju_integration" "etcd_ca" {
 
   application {
     name     = one(juju_application.etcd_ca[*].name)
-    endpoint = "client"
+    endpoint = "certificates"
   }
 
   application {
     name     = one(juju_application.etcd[*].name)
-    endpoint = "certificates"
+    endpoint = "client-certificates"
   }
 }
 
@@ -219,6 +215,19 @@ resource "juju_integration" "ams_agent_streaming" {
   }
 }
 
+resource "juju_integration" "ams_ca" {
+  model = juju_model.subcluster.name
+
+  application {
+    name     = juju_application.ca.name
+    endpoint = "certificates"
+  }
+
+  application {
+    name     = juju_application.ams.name
+    endpoint = "certificates"
+  }
+}
 
 resource "juju_integration" "agent_ca" {
   model = juju_model.subcluster.name
