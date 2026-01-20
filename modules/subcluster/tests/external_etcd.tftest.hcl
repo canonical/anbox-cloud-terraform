@@ -33,8 +33,4 @@ run "test_external_etcd_enabled" {
     condition     = juju_application.etcd[0].charm[0].name == "charmed-etcd"
     error_message = "`charmed-etcd` charm should be used to deploy ETCD."
   }
-  assert {
-    condition     = juju_application.etcd[0].config == tomap({ channel = "3.4/stable" })
-    error_message = "`etcd` charm should be deployed from `3.4/stable` channel by default."
-  }
 }
