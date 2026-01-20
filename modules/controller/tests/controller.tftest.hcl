@@ -3,7 +3,7 @@
 //
 
 variables {
-  channel        = "1.27/stable"
+  channel        = "1.29/edge"
   constraints    = [""]
   ssh_public_key = "ssh-rsa test-key a@b"
 }

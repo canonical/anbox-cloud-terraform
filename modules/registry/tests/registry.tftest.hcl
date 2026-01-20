@@ -4,7 +4,7 @@
 
 variables {
   ubuntu_pro_token = "token"
-  channel          = "1.27/stable"
+  channel          = "1.29/edge"
   constraints      = [""]
   ssh_public_key   = "ssh-rsa key a@b"
 }

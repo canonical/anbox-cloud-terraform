@@ -5,7 +5,7 @@
 run "test_registry" {
   command = plan
   variables {
-    anbox_channel = "1.27/stable"
+    anbox_channel = "1.29/edge"
     subclusters = [{
       name           = "a"
       lxd_node_count = 1
