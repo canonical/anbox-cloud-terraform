@@ -103,3 +103,19 @@ jobs:
 
           echo "All models deployed successfully"
 
+      - name: Upload test logs
+        if: failure()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: logs-tests-anbox-cloud-terraform
+          path: logs/
+          retention-days: 4
+      # FIXME: The current post actions-operator tries to upload any artifact called
+      # juju-crashdump-* with name juju-crashdump which github is not happy with.
+      # so we remove the files before the cleanup so that the cleanup does not
+      # fail.
+      - name: Remove logs if present
+        if: failure()
+        run: |
+          rm -rf logs/juju-crashdump-*
+
