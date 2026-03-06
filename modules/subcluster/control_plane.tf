@@ -21,15 +21,15 @@ resource "juju_model" "subcluster" {
 }
 
 resource "juju_ssh_key" "this" {
-  count   = length(var.ssh_public_key) > 0 ? 1 : 0
-  model   = juju_model.subcluster.name
-  payload = trim(var.ssh_public_key, "\n")
+  count      = length(var.ssh_public_key) > 0 ? 1 : 0
+  model_uuid = juju_model.subcluster.uuid
+  payload    = trim(var.ssh_public_key, "\n")
 }
 
 resource "juju_application" "ams" {
   name = "ams"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
   machines    = juju_machine.ams_node[*].machine_id
 
@@ -56,7 +56,7 @@ resource "juju_application" "etcd" {
   count = var.external_etcd ? 1 : 0
   name  = "etcd"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -81,7 +81,7 @@ resource "juju_application" "etcd" {
 resource "juju_application" "ca" {
   name = "ca"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -97,7 +97,7 @@ resource "juju_application" "etcd_ca" {
   count = var.external_etcd ? 1 : 0
   name  = "etcd-ca"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -110,8 +110,8 @@ resource "juju_application" "etcd_ca" {
 }
 
 resource "juju_integration" "ams_db" {
-  count = var.external_etcd ? 1 : 0
-  model = juju_model.subcluster.name
+  count      = var.external_etcd ? 1 : 0
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.ams.name
@@ -125,8 +125,8 @@ resource "juju_integration" "ams_db" {
 }
 
 resource "juju_integration" "etcd_ca" {
-  count = var.external_etcd ? 1 : 0
-  model = juju_model.subcluster.name
+  count      = var.external_etcd ? 1 : 0
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = one(juju_application.etcd_ca[*].name)
@@ -142,7 +142,7 @@ resource "juju_integration" "etcd_ca" {
 resource "juju_application" "agent" {
   name = "anbox-stream-agent"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -170,7 +170,7 @@ resource "juju_application" "agent" {
 resource "juju_application" "coturn" {
   name = "coturn"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -192,7 +192,7 @@ resource "juju_application" "coturn" {
 }
 
 resource "juju_integration" "agent_ams" {
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.agent.name
@@ -206,7 +206,7 @@ resource "juju_integration" "agent_ams" {
 }
 
 resource "juju_integration" "ams_agent_streaming" {
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.agent.name
@@ -221,7 +221,7 @@ resource "juju_integration" "ams_agent_streaming" {
 
 
 resource "juju_integration" "agent_ca" {
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.ca.name
@@ -235,7 +235,7 @@ resource "juju_integration" "agent_ca" {
 }
 
 resource "juju_integration" "coturn_agent" {
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.coturn.name
@@ -249,8 +249,8 @@ resource "juju_integration" "coturn_agent" {
 }
 
 resource "juju_integration" "ams_aar" {
-  count = var.registry_config != null ? 1 : 0
-  model = juju_model.subcluster.name
+  count      = var.registry_config != null ? 1 : 0
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.ams.name
@@ -263,9 +263,9 @@ resource "juju_integration" "ams_aar" {
 }
 
 resource "juju_offer" "ams_offer" {
-  model            = juju_model.subcluster.name
+  model_uuid       = juju_model.subcluster.uuid
   application_name = juju_application.ams.name
-  endpoint         = "rest-api"
+  endpoints        = ["rest-api"]
   name             = "ams${local.offer_suffix}"
 }
 
@@ -274,7 +274,7 @@ resource "juju_application" "cos_agent" {
   count = var.enable_cos ? 1 : 0
   name  = "grafana-agent"
 
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   charm {
     name = "grafana-agent"
@@ -290,8 +290,8 @@ resource "juju_application" "cos_agent" {
 }
 
 resource "juju_integration" "ams_cos" {
-  count = var.enable_cos ? 1 : 0
-  model = juju_model.subcluster.name
+  count      = var.enable_cos ? 1 : 0
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.ams.name
@@ -305,7 +305,7 @@ resource "juju_integration" "ams_cos" {
 }
 
 resource "juju_machine" "ams_node" {
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   count       = local.num_units
   base        = local.base
   name        = "ams-${count.index}"
@@ -314,7 +314,7 @@ resource "juju_machine" "ams_node" {
 
 resource "juju_machine" "db_node" {
   count       = var.external_etcd ? local.num_units : 0
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   base        = local.base
   name        = "db-${count.index}"
   constraints = join(" ", var.constraints)

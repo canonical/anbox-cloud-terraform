@@ -12,6 +12,11 @@ output "model_name" {
   description = "Model name for the deployed controller."
 }
 
+output "model_uuid" {
+  value       = juju_model.controller.uuid
+  description = "Model uuid for the deployed controller."
+}
+
 output "dashboard_app_name" {
   value       = juju_application.dashboard.name
   description = "Anbox Cloud Dashboard application name deployed in the controller model."

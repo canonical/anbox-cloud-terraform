@@ -19,15 +19,15 @@ resource "juju_model" "registry" {
 }
 
 resource "juju_ssh_key" "this" {
-  count   = length(var.ssh_public_key) > 0 ? 1 : 0
-  model   = juju_model.registry.name
-  payload = trim(var.ssh_public_key, "\n")
+  count      = length(var.ssh_public_key) > 0 ? 1 : 0
+  model_uuid = juju_model.registry.uuid
+  payload    = trim(var.ssh_public_key, "\n")
 }
 
 resource "juju_application" "aar" {
   name = "aar"
 
-  model       = juju_model.registry.name
+  model_uuid  = juju_model.registry.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -52,15 +52,15 @@ resource "juju_application" "aar" {
 }
 
 resource "juju_offer" "client_offer" {
-  model            = juju_model.registry.name
+  model_uuid       = juju_model.registry.uuid
   application_name = juju_application.aar.name
-  endpoint         = "client"
+  endpoints        = ["client"]
   name             = "aar-client"
 }
 
 resource "juju_offer" "publisher_offer" {
-  model            = juju_model.registry.name
+  model_uuid       = juju_model.registry.uuid
   application_name = juju_application.aar.name
   name             = "aar-publisher"
-  endpoint         = "publisher"
+  endpoints        = ["publisher"]
 }

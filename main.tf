@@ -48,8 +48,8 @@ module "registry" {
 }
 
 resource "juju_integration" "agent_nats_cmr" {
-  for_each = module.subcluster
-  model    = each.value.model_name
+  for_each   = module.subcluster
+  model_uuid = each.value.model_uuid
 
   application {
     name     = each.value.agent_app_name
@@ -62,8 +62,8 @@ resource "juju_integration" "agent_nats_cmr" {
 }
 
 resource "juju_integration" "dashboard_ams_cmr" {
-  for_each = module.subcluster
-  model    = module.controller.model_name
+  for_each   = module.subcluster
+  model_uuid = module.controller.model_uuid
 
   application {
     name     = module.controller.dashboard_app_name

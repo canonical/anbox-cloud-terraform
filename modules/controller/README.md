@@ -19,7 +19,7 @@ includes:
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.19.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 1.3.0 |
 
 ## Providers
 
@@ -60,6 +60,7 @@ No modules.
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
+| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. | `string` | `""` | no |
 
 ## Outputs
 
@@ -67,5 +68,6 @@ No modules.
 |------|-------------|
 | <a name="output_dashboard_app_name"></a> [dashboard\_app\_name](#output\_dashboard\_app\_name) | Anbox Cloud Dashboard application name deployed in the controller model. |
 | <a name="output_model_name"></a> [model\_name](#output\_model\_name) | Model name for the deployed controller. |
+| <a name="output_model_uuid"></a> [model\_uuid](#output\_model\_uuid) | Model uuid for the deployed controller. |
 | <a name="output_nats_offer_url"></a> [nats\_offer\_url](#output\_nats\_offer\_url) | Juju offer url for connecting to the NATS charm. |
 <!-- END_TF_DOCS -->
