@@ -19,15 +19,15 @@ resource "juju_model" "controller" {
 }
 
 resource "juju_ssh_key" "this" {
-  count   = length(var.ssh_public_key) > 0 ? 1 : 0
-  model   = juju_model.controller.name
-  payload = trim(var.ssh_public_key, "\n")
+  count      = length(var.ssh_public_key) > 0 ? 1 : 0
+  model_uuid = juju_model.controller.uuid
+  payload    = trim(var.ssh_public_key, "\n")
 }
 
 resource "juju_application" "nats" {
   name = "nats"
 
-  model       = juju_model.controller.name
+  model_uuid  = juju_model.controller.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -49,7 +49,7 @@ resource "juju_application" "nats" {
 resource "juju_application" "gateway" {
   name = "anbox-stream-gateway"
 
-  model       = juju_model.controller.name
+  model_uuid  = juju_model.controller.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -76,7 +76,7 @@ resource "juju_application" "gateway" {
 resource "juju_application" "dashboard" {
   name = "anbox-cloud-dashboard"
 
-  model       = juju_model.controller.name
+  model_uuid  = juju_model.controller.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -103,7 +103,7 @@ resource "juju_application" "dashboard" {
 resource "juju_application" "ca" {
   name = "ca"
 
-  model       = juju_model.controller.name
+  model_uuid  = juju_model.controller.uuid
   constraints = join(" ", var.constraints)
 
   charm {
@@ -123,7 +123,7 @@ resource "juju_application" "ca" {
 }
 
 resource "juju_integration" "gateway_nats" {
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.gateway.name
@@ -137,7 +137,7 @@ resource "juju_integration" "gateway_nats" {
 }
 
 resource "juju_integration" "dashboard_gateway" {
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.gateway.name
@@ -152,7 +152,7 @@ resource "juju_integration" "dashboard_gateway" {
 
 
 resource "juju_integration" "nats_ca" {
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.ca.name
@@ -166,7 +166,7 @@ resource "juju_integration" "nats_ca" {
 }
 
 resource "juju_integration" "gateway_ca" {
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.ca.name
@@ -180,7 +180,7 @@ resource "juju_integration" "gateway_ca" {
 }
 
 resource "juju_integration" "dashboard_ca" {
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.ca.name
@@ -194,16 +194,16 @@ resource "juju_integration" "dashboard_ca" {
 }
 
 resource "juju_offer" "nats_offer" {
-  model            = juju_model.controller.name
+  model_uuid       = juju_model.controller.uuid
   application_name = juju_application.nats.name
-  endpoint         = "client"
+  endpoints        = ["client"]
 }
 
 resource "juju_application" "cos_agent" {
   count = var.enable_cos ? 1 : 0
   name  = "grafana-agent"
 
-  model = juju_model.controller.name
+  model_uuid = juju_model.controller.uuid
 
   charm {
     name = "grafana-agent"
@@ -219,8 +219,8 @@ resource "juju_application" "cos_agent" {
 }
 
 resource "juju_integration" "gateway_cos" {
-  count = var.enable_cos ? 1 : 0
-  model = juju_model.controller.name
+  count      = var.enable_cos ? 1 : 0
+  model_uuid = juju_model.controller.uuid
 
   application {
     name     = juju_application.gateway.name
@@ -235,7 +235,7 @@ resource "juju_integration" "gateway_cos" {
 
 
 resource "juju_machine" "controller_node" {
-  model       = juju_model.controller.name
+  model_uuid  = juju_model.controller.uuid
   count       = local.num_units
   base        = local.base
   name        = "anbox-controller-${count.index}"

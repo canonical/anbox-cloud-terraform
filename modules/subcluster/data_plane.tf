@@ -5,7 +5,7 @@
 resource "juju_application" "lxd" {
   name = "lxd"
 
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   constraints = join(" ", concat(var.constraints, ["root-disk=10240M"]))
 
   charm {
@@ -28,7 +28,7 @@ resource "juju_application" "lxd" {
 }
 
 resource "juju_integration" "ams_lxd" {
-  model = juju_model.subcluster.name
+  model_uuid = juju_model.subcluster.uuid
 
   application {
     name     = juju_application.ams.name
@@ -42,7 +42,7 @@ resource "juju_integration" "ams_lxd" {
 }
 
 resource "juju_machine" "lxd_node" {
-  model       = juju_model.subcluster.name
+  model_uuid  = juju_model.subcluster.uuid
   count       = var.lxd_nodes
   base        = local.base
   name        = "lxd-${count.index}"

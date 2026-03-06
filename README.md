@@ -20,13 +20,13 @@ cross model relations.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.6 |
-| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 0.19.0 |
+| <a name="requirement_juju"></a> [juju](#requirement\_juju) | ~> 1.3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 1.3.0 |
 
 ## Modules
 
@@ -54,7 +54,7 @@ cross model relations.
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
 | <a name="input_ssh_key_path"></a> [ssh\_key\_path](#input\_ssh\_key\_path) | Path to the SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 | <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | List of subclusters to deploy. | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      mode = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
-| <a name="input_ubuntu_pro_token"></a> [ubuntu_pro_token](#input_ubuntu_pro_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. This will be forwarded to all relevant charms as `ua_token`. | `string` | `""` | no |
+| <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. | `string` | `""` | no |
 
 ## Outputs
 

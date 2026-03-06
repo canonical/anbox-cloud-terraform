@@ -12,6 +12,11 @@ output "model_name" {
   description = "Model name for the deployed subcluster."
 }
 
+output "model_uuid" {
+  value       = juju_model.subcluster.uuid
+  description = "Model uuid for the deployed subcluster."
+}
+
 output "agent_app_name" {
   value       = juju_application.agent.name
   description = "Anbox Stream Agent application name deployed in the subcluster model."
