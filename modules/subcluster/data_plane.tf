@@ -15,7 +15,8 @@ resource "juju_application" "lxd" {
   }
 
   config = {
-    ua_token = var.ubuntu_pro_token
+    ua_token                        = var.ubuntu_pro_token
+    node_controller_snap_risk_level = local.risk
   }
 
   machines = juju_machine.lxd_node[*].machine_id
