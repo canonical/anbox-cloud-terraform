@@ -13,6 +13,9 @@
     "helpers:pinGitHubActionDigests",
     "regexManagers:dockerfileVersions"
   ],
+  "minimumreleaseage": "7 days",
+  "minimumreleaseagebehaviour": "timestamp-optional",
+  "prcreation": "not-pending",
   "automergeType": "branch",
   "packageRules": [
     {
