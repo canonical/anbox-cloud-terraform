@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - main
+    - stable-*
   pull_request:
 
 concurrency:
@@ -34,8 +35,9 @@ jobs:
         provider: lxd
     - name: Create terraform Plan
       run: |
+        ANBOX_CHANNEL="$(cut -d'.' -f1,2 < .version)/stable"
         cat <<EOF > default.auto.tfvars
-        anbox_channel  = "1.27/stable"
+        anbox_channel  = "${ANBOX_CHANNEL}"
         subclusters = [
           {
             name           = "a"

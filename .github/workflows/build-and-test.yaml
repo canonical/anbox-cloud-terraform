@@ -59,9 +59,8 @@ jobs:
             popd
           done
       - name: Deploy Main Plan
-        env:
-          ANBOX_CHANNEL: 1.29/stable
         run: |
+          ANBOX_CHANNEL="$(cut -d'.' -f1,2 < .version)/beta"
           cat <<EOF > ci.tfvars
           anbox_channel  = "${ANBOX_CHANNEL}"
           subclusters = [
