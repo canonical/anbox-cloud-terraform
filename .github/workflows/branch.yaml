@@ -1,0 +1,66 @@
+name: Branch for stable series
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  branch:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'canonical' }}
+    environment: stable
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        ref: main
+        fetch-depth: 0
+    - name: Create branch and bump version
+      env:
+        AUTHOR_NAME: "Anbox Bot"
+        AUTHOR_EMAIL: "anbox-bot@canonical.com"
+        ANBOX_CLOUD_CI_BOT_SSH_KEY: ${{ secrets.ANBOX_CLOUD_CI_BOT_SSH_KEY }}
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        # Setup SSH key based access so we can write a branch
+        . "$GITHUB_WORKSPACE"/scripts/setup-gh-ssh.sh
+
+        git config --global user.name "$AUTHOR_NAME"
+        git config --global user.email "$AUTHOR_EMAIL"
+
+        # First we create the new stable branch from main
+        series="$(cut -d. -f1,2 < .version)"
+        branch_name="stable-$series"
+        git checkout -b "$branch_name"
+        git push git@github-anbox-cloud-terraform:canonical/anbox-cloud-terraform "$branch_name"
+
+        # Next we have to update main to include the new version number
+        minor="$(echo "$series" | cut -d. -f2)"
+        next_minor=$((minor+1))
+        next_version="1.$next_minor.0"
+        next_series="1.$next_minor"
+        bump_branch="bump-version-to-$next_version"
+
+        # If we already have a branch and PR we can stop here
+        if git ls-remote --heads origin | grep -q "$bump_branch"; then
+          exit 0
+        fi
+
+        git checkout main
+        git checkout -b "$bump_branch"
+
+        # Bump .version to the next minor
+        sed -i "s/${series}\.0/${next_version}/g" .version
+
+        # Update anbox_channel default in variables.tf to the next minor stable channel
+        sed -i "s/default *= *\"${series}\/stable\"/default = \"${next_series}\/stable\"/" variables.tf
+
+        git add .version variables.tf
+        git commit -m "chore: bump version to $next_version"
+        git push git@github-anbox-cloud-terraform:canonical/anbox-cloud-terraform "$bump_branch"
+
+        gh pr create -B main -H "$bump_branch" \
+          --title "Bump version to $next_version" \
+          --body "Automatically requested by workflow. Please close and reopen this PR to trigger workflows!"

@@ -11,6 +11,7 @@ variable "constraints" {
 variable "anbox_channel" {
   description = "Channel to deploy anbox cloud charms from."
   type        = string
+  default     = "1.30/stable"
 
   validation {
     condition     = can(regex("\\d+\\.\\d+\\/\\w+", var.anbox_channel))
