@@ -1,0 +1,76 @@
+name: Publish Terraform Plan
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Stable branch to tag and release (e.g. stable-1.30)'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'canonical' && contains(inputs.branch, 'stable-') }}
+    environment: stable
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        ref: ${{ inputs.branch }}
+        fetch-depth: 0
+    - name: Create tag
+      env:
+        AUTHOR_NAME: "Anbox Bot"
+        AUTHOR_EMAIL: "anbox-bot@canonical.com"
+        ANBOX_CLOUD_CI_BOT_SSH_KEY: ${{ secrets.ANBOX_CLOUD_CI_BOT_SSH_KEY }}
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        # Setup SSH key based access so we can push the tag
+        . "$GITHUB_WORKSPACE"/scripts/setup-gh-ssh.sh
+
+        git config --global user.name "$AUTHOR_NAME"
+        git config --global user.email "$AUTHOR_EMAIL"
+
+        version="$(cat .version)"
+        tag="v$version"
+
+        # Create and push the tag
+        git tag "$tag"
+        git push git@github-anbox-cloud-terraform:canonical/anbox-cloud-terraform "$tag"
+
+    - name: Bump patch version
+      env:
+        AUTHOR_NAME: "Anbox Bot"
+        AUTHOR_EMAIL: "anbox-bot@canonical.com"
+        ANBOX_CLOUD_CI_BOT_SSH_KEY: ${{ secrets.ANBOX_CLOUD_CI_BOT_SSH_KEY }}
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        # Setup SSH key based access so we can push the bump branch
+        . "$GITHUB_WORKSPACE"/scripts/setup-gh-ssh.sh
+
+        git config --global user.name "$AUTHOR_NAME"
+        git config --global user.email "$AUTHOR_EMAIL"
+
+        version="$(cat .version)"
+        patch="$(echo "$version" | cut -d. -f3)"
+        next_patch=$((patch+1))
+        next_version="$(echo "$version" | cut -d. -f1,2).$next_patch"
+        bump_branch="bump-version-to-$next_version"
+
+        # If we already have a branch and PR we can stop here
+        if git ls-remote --heads origin | grep -q "$bump_branch"; then
+          exit 0
+        fi
+
+        git checkout -b "$bump_branch"
+        sed -i "s/$version/$next_version/" .version
+        git add .version
+        git commit -m "chore: bump version to $next_version"
+        git push git@github-anbox-cloud-terraform:canonical/anbox-cloud-terraform "$bump_branch"
+
+        gh pr create -B "${{ inputs.branch }}" -H "$bump_branch" \
+          --title "Bump version to $next_version" \
+          --body "Automatically requested by workflow. Please close and reopen this PR to trigger workflows!"
