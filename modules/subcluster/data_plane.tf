@@ -5,8 +5,9 @@
 resource "juju_application" "lxd" {
   name = "lxd"
 
-  model_uuid  = juju_model.subcluster.uuid
-  constraints = join(" ", concat(var.constraints, ["root-disk=10240M"]))
+  model_uuid         = juju_model.subcluster.uuid
+  constraints        = join(" ", concat(var.constraints, ["root-disk=10240M"]))
+  storage_directives = local.is_aws ? { "pool" = "ebs-ssd,100G,1" } : null
 
   charm {
     name    = "ams-lxd"

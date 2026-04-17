@@ -64,3 +64,14 @@ variable "ubuntu_pro_token" {
   default     = ""
 }
 
+variable "cloud_type" {
+  description = "The cloud type where the Juju model is deployed. Controls cloud-specific resource configuration."
+  type        = string
+  default     = "lxd"
+
+  validation {
+    condition     = contains(["lxd", "aws"], var.cloud_type)
+    error_message = "cloud_type must be one of: lxd, aws."
+  }
+}
+
