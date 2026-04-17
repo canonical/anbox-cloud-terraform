@@ -7,6 +7,7 @@ locals {
   // an identifier for an offer.
   offer_suffix = replace(var.model_suffix, "/[-_.]*/", "")
   num_units    = var.enable_ha ? 3 : 1
+  is_aws       = var.cloud_type == "aws"
 }
 
 resource "juju_model" "subcluster" {

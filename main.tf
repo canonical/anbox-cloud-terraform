@@ -21,6 +21,7 @@ module "subcluster" {
   enable_cos       = var.enable_cos
   ssh_public_key   = length(var.ssh_key_path) > 0 ? file(var.ssh_key_path) : ""
   ubuntu_pro_token = var.ubuntu_pro_token
+  cloud_type       = var.cloud_type
 
   // We let the `lxd_node_count` value override the HA configuration for number
   // of LXD nodes.
