@@ -6,7 +6,7 @@ resource "juju_application" "lxd" {
   name = "lxd"
 
   model_uuid         = juju_model.subcluster.uuid
-  constraints        = join(" ", concat(var.constraints, ["root-disk=10240M"]))
+  constraints        = join(" ", var.constraints)
   storage_directives = local.is_aws ? { "pool" = "ebs-ssd,100G,1" } : null
 
   charm {
@@ -48,5 +48,5 @@ resource "juju_machine" "lxd_node" {
   count       = var.lxd_nodes
   base        = local.base
   name        = "lxd-${count.index}"
-  constraints = join(" ", var.constraints)
+  constraints = join(" ", concat(var.constraints, ["root-disk=100G"]))
 }
