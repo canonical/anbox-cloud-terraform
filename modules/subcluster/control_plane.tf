@@ -186,6 +186,8 @@ resource "juju_application" "coturn" {
 
   machines = juju_machine.ams_node[*].machine_id
 
+  expose {}
+
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
