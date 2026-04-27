@@ -31,16 +31,17 @@ module "subcluster" {
 }
 
 module "controller" {
-  source           = "./modules/controller"
-  base             = var.base
-  debug            = var.enable_debug_mode
-  channel          = var.anbox_channel
-  constraints      = var.constraints
-  enable_ha        = var.enable_ha
-  enable_cos       = var.enable_cos
-  enable_lb        = var.enable_lb
-  ssh_public_key   = length(var.ssh_key_path) > 0 ? file(var.ssh_key_path) : ""
-  ubuntu_pro_token = var.ubuntu_pro_token
+  source            = "./modules/controller"
+  base              = var.base
+  debug             = var.enable_debug_mode
+  nats_expose_cidrs = var.nats_expose_cidrs
+  channel           = var.anbox_channel
+  constraints       = var.constraints
+  enable_ha         = var.enable_ha
+  enable_cos        = var.enable_cos
+  enable_lb         = var.enable_lb
+  ssh_public_key    = length(var.ssh_key_path) > 0 ? file(var.ssh_key_path) : ""
+  ubuntu_pro_token  = var.ubuntu_pro_token
 }
 
 module "registry" {

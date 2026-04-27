@@ -38,6 +38,14 @@ resource "juju_application" "nats" {
 
   machines = juju_machine.controller_node[*].machine_id
 
+  dynamic "expose" {
+    for_each = length(var.nats_expose_cidrs) > 0 ? [1] : []
+    content {
+      endpoints = "client"
+      cidrs     = join(",", var.nats_expose_cidrs)
+    }
+  }
+
   // FIXME: Currently the provider has some issues with reconciling state using
   // the response from the JUJU APIs. This is done just to ignore the changes in
   // string values returned.
