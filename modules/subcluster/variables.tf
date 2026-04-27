@@ -2,6 +2,12 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
+variable "base" {
+  description = "Ubuntu base to use for deployed charms and machines."
+  type        = string
+  default     = "ubuntu@24.04"
+}
+
 variable "model_suffix" {
   type        = string
   description = "Suffix to attach for model"

@@ -12,6 +12,7 @@ locals {
 module "subcluster" {
   for_each         = local.subcluster_config_map
   source           = "./modules/subcluster"
+  base             = var.base
   model_suffix     = each.key
   channel          = var.anbox_channel
   external_etcd    = true
@@ -30,6 +31,7 @@ module "subcluster" {
 
 module "controller" {
   source           = "./modules/controller"
+  base             = var.base
   channel          = var.anbox_channel
   constraints      = var.constraints
   enable_ha        = var.enable_ha
@@ -42,6 +44,7 @@ module "controller" {
 module "registry" {
   count            = var.deploy_registry ? 1 : 0
   source           = "./modules/registry"
+  base             = var.base
   channel          = var.anbox_channel
   constraints      = var.constraints
   enable_ha        = var.enable_ha

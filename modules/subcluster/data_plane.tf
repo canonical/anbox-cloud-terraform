@@ -12,7 +12,7 @@ resource "juju_application" "lxd" {
   charm {
     name    = "ams-lxd"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
 
   config = {
@@ -46,7 +46,7 @@ resource "juju_integration" "ams_lxd" {
 resource "juju_machine" "lxd_node" {
   model_uuid  = juju_model.subcluster.uuid
   count       = var.lxd_nodes
-  base        = local.base
+  base        = var.base
   name        = "lxd-${count.index}"
   constraints = join(" ", concat(var.constraints, ["root-disk=100G"]))
 }
