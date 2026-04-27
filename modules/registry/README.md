@@ -22,7 +22,7 @@ includes:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 1.3.0 |
 
 ## Modules
 
@@ -42,8 +42,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_base"></a> [base](#input\_base) | Ubuntu base to use for deployed charms and machines. | `string` | `"ubuntu@24.04"` | no |
 | <a name="input_channel"></a> [channel](#input\_channel) | Channel for the deployed charm | `string` | `"latest/stable"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_debug"></a> [debug](#input\_debug) | Enable debug logging and charm-level debug options across all deployed applications. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. | `string` | `""` | no |

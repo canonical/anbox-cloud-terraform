@@ -26,7 +26,7 @@ cross model relations.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 1.3.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | 1.3.1 |
 
 ## Modules
 
@@ -47,11 +47,16 @@ cross model relations.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Channel to deploy anbox cloud charms from. | `string` | n/a | yes |
+| <a name="input_anbox_channel"></a> [anbox\_channel](#input\_anbox\_channel) | Channel to deploy anbox cloud charms from. | `string` | `"1.30/stable"` | no |
+| <a name="input_base"></a> [base](#input\_base) | Ubuntu base to use for all deployed charms and machines. | `string` | `"ubuntu@22.04"` | no |
+| <a name="input_cloud_type"></a> [cloud\_type](#input\_cloud\_type) | The cloud type where the Juju models are deployed. Controls cloud-specific resource configuration. | `string` | `"lxd"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
 | <a name="input_deploy_registry"></a> [deploy\_registry](#input\_deploy\_registry) | Deploy the Anbox Application Registry | `bool` | `false` | no |
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
+| <a name="input_enable_debug_mode"></a> [enable\_debug\_mode](#input\_enable\_debug\_mode) | Enable debug logging and charm-level debug options across all deployed applications. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Enable HA mode for anbox cloud | `bool` | `false` | no |
+| <a name="input_enable_lb"></a> [enable\_lb](#input\_enable\_lb) | Deploy an haproxy load balancer in the controller model, balancing traffic across the gateway and dashboard. | `bool` | `false` | no |
+| <a name="input_nats_expose_cidrs"></a> [nats\_expose\_cidrs](#input\_nats\_expose\_cidrs) | List of CIDRs allowed to reach the NATS application. Should cover the network range of all subcluster nodes. | `list(string)` | <pre>[<br/>  "10.0.0.0/8",<br/>  "172.16.0.0/12",<br/>  "192.168.0.0/16"<br/>]</pre> | no |
 | <a name="input_ssh_key_path"></a> [ssh\_key\_path](#input\_ssh\_key\_path) | Path to the SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 | <a name="input_subclusters"></a> [subclusters](#input\_subclusters) | List of subclusters to deploy. | <pre>list(object({<br/>    name           = string<br/>    lxd_node_count = number<br/>    registry = optional(object({<br/>      mode = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. | `string` | `""` | no |

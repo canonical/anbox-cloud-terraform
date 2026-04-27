@@ -25,7 +25,7 @@ includes:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 1.3.0 |
 
 ## Modules
 
@@ -39,11 +39,14 @@ No modules.
 | [juju_application.cos_agent](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.dashboard](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.gateway](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
+| [juju_application.lb](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_application.nats](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/application) | resource |
 | [juju_integration.dashboard_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.dashboard_gateway](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_integration.dashboard_lb](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.gateway_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.gateway_cos](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
+| [juju_integration.gateway_lb](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.gateway_nats](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_integration.nats_ca](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/integration) | resource |
 | [juju_machine.controller_node](https://registry.terraform.io/providers/juju/juju/latest/docs/resources/machine) | resource |
@@ -55,10 +58,14 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_base"></a> [base](#input\_base) | Ubuntu base to use for deployed charms and machines. | `string` | `"ubuntu@24.04"` | no |
 | <a name="input_channel"></a> [channel](#input\_channel) | Channel for the deployed charm | `string` | `"latest/stable"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_debug"></a> [debug](#input\_debug) | Enable debug logging and charm-level debug options across all deployed applications. | `bool` | `false` | no |
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
+| <a name="input_enable_lb"></a> [enable\_lb](#input\_enable\_lb) | Deploy an haproxy load balancer in front of the gateway and dashboard. | `bool` | `false` | no |
+| <a name="input_nats_expose_cidrs"></a> [nats\_expose\_cidrs](#input\_nats\_expose\_cidrs) | List of CIDRs allowed to reach the NATS application. | `list(string)` | <pre>[<br/>  "10.0.0.0/8",<br/>  "172.16.0.0/12",<br/>  "192.168.0.0/16"<br/>]</pre> | no |
 | <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | SSH key to be imported in the juju models. No key is imported by default. | `string` | `""` | no |
 | <a name="input_ubuntu_pro_token"></a> [ubuntu\_pro\_token](#input\_ubuntu\_pro\_token) | Ubuntu Advantage token that is received with your license of Anbox Cloud. | `string` | `""` | no |
 
@@ -67,6 +74,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_dashboard_app_name"></a> [dashboard\_app\_name](#output\_dashboard\_app\_name) | Anbox Cloud Dashboard application name deployed in the controller model. |
+| <a name="output_lb_app_name"></a> [lb\_app\_name](#output\_lb\_app\_name) | Name of the haproxy load balancer application in the controller model. Null if enable\_lb is false. |
 | <a name="output_model_name"></a> [model\_name](#output\_model\_name) | Model name for the deployed controller. |
 | <a name="output_model_uuid"></a> [model\_uuid](#output\_model\_uuid) | Model uuid for the deployed controller. |
 | <a name="output_nats_offer_url"></a> [nats\_offer\_url](#output\_nats\_offer\_url) | Juju offer url for connecting to the NATS charm. |
