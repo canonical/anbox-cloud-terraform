@@ -2,6 +2,12 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
+variable "nats_expose_cidrs" {
+  description = "List of CIDRs allowed to reach the NATS application."
+  type        = list(string)
+  default     = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+}
+
 variable "debug" {
   description = "Enable debug logging and charm-level debug options across all deployed applications."
   type        = bool
