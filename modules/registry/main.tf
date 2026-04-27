@@ -33,7 +33,7 @@ resource "juju_application" "aar" {
   charm {
     name    = "aar"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
 
   units = local.num_units

@@ -37,7 +37,7 @@ resource "juju_application" "ams" {
   charm {
     name    = "ams"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
   config = {
     use_embedded_etcd = !var.external_etcd
@@ -63,7 +63,7 @@ resource "juju_application" "etcd" {
   charm {
     name    = "etcd"
     channel = "latest/stable"
-    base    = local.base
+    base    = var.base
   }
 
   config = {
@@ -88,7 +88,7 @@ resource "juju_application" "ca" {
   charm {
     name    = "self-signed-certificates"
     channel = "latest/stable"
-    base    = local.base
+    base    = var.base
   }
 
   machines = juju_machine.ams_node[*].machine_id
@@ -104,7 +104,7 @@ resource "juju_application" "etcd_ca" {
   charm {
     name    = "easyrsa"
     channel = "latest/stable"
-    base    = local.base
+    base    = var.base
   }
 
   machines = juju_machine.db_node[*].machine_id
@@ -149,7 +149,7 @@ resource "juju_application" "agent" {
   charm {
     name    = "anbox-stream-agent"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
 
   machines = juju_machine.ams_node[*].machine_id
@@ -176,7 +176,7 @@ resource "juju_application" "coturn" {
 
   charm {
     name = "coturn"
-    base = local.base
+    base = var.base
     // Since this is released by Anbox Charmer, this charm is release with anbox
     // releases
     channel = var.channel
@@ -279,7 +279,7 @@ resource "juju_application" "cos_agent" {
 
   charm {
     name = "grafana-agent"
-    base = local.base
+    base = var.base
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -308,7 +308,7 @@ resource "juju_integration" "ams_cos" {
 resource "juju_machine" "ams_node" {
   model_uuid  = juju_model.subcluster.uuid
   count       = local.num_units
-  base        = local.base
+  base        = var.base
   name        = "ams-${count.index}"
   constraints = join(" ", var.constraints)
 }
@@ -316,7 +316,7 @@ resource "juju_machine" "ams_node" {
 resource "juju_machine" "db_node" {
   count       = var.external_etcd ? local.num_units : 0
   model_uuid  = juju_model.subcluster.uuid
-  base        = local.base
+  base        = var.base
   name        = "db-${count.index}"
   constraints = join(" ", var.constraints)
 }

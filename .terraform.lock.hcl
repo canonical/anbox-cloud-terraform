@@ -5,7 +5,7 @@ provider "registry.terraform.io/juju/juju" {
   version     = "1.3.1"
   constraints = "~> 1.3.0"
   hashes = [
-    "h1:JC8eYE3F6ygaQRIVpgU6qvtP1dvlR0MCt/l0Q+PCVAc=",
+    "h1:yMiI3T0blYCWXOzxe+bExM77DMxe5E25Q9enSJ+p2oQ=",
     "zh:1fbfd8adc8ad2c20dd574a3aa15b5147a05f7853c72d16692c7a81483af80e5c",
     "zh:5e5757f067891e698af5ace35ac108481d8e08743a9696ffc6b2651879750ec2",
     "zh:6bf3a478827f598ed6a31537423619958d2dabfc87c2c1dc3c67f33722a00bbc",

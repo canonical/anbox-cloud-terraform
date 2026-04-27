@@ -2,6 +2,12 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
+variable "base" {
+  description = "Ubuntu base to use for all deployed charms and machines."
+  type        = string
+  default     = "ubuntu@22.04"
+}
+
 variable "constraints" {
   description = "List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>`"
   type        = list(string)

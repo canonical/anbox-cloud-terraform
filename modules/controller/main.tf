@@ -33,7 +33,7 @@ resource "juju_application" "nats" {
   charm {
     name    = "nats"
     channel = "2/stable"
-    base    = local.base
+    base    = var.base
   }
 
   machines = juju_machine.controller_node[*].machine_id
@@ -55,7 +55,7 @@ resource "juju_application" "gateway" {
   charm {
     name    = "anbox-stream-gateway"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
 
   machines = juju_machine.controller_node[*].machine_id
@@ -82,7 +82,7 @@ resource "juju_application" "dashboard" {
   charm {
     name    = "anbox-cloud-dashboard"
     channel = var.channel
-    base    = local.base
+    base    = var.base
   }
 
   config = {
@@ -108,7 +108,7 @@ resource "juju_application" "ca" {
 
   charm {
     name    = "self-signed-certificates"
-    base    = local.base
+    base    = var.base
     channel = "latest/stable"
   }
 
@@ -207,7 +207,7 @@ resource "juju_application" "cos_agent" {
 
   charm {
     name = "grafana-agent"
-    base = local.base
+    base = var.base
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -237,7 +237,7 @@ resource "juju_integration" "gateway_cos" {
 resource "juju_machine" "controller_node" {
   model_uuid  = juju_model.controller.uuid
   count       = local.num_units
-  base        = local.base
+  base        = var.base
   name        = "anbox-controller-${count.index}"
   constraints = join(" ", var.constraints)
 }
@@ -252,7 +252,7 @@ resource "juju_application" "lb" {
   charm {
     name    = "haproxy"
     channel = "latest/stable"
-    base    = local.base
+    base    = var.base
   }
 
   machines = [juju_machine.controller_node[0].machine_id]
