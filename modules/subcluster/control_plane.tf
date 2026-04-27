@@ -16,7 +16,7 @@ resource "juju_model" "subcluster" {
   constraints = join(" ", var.constraints)
 
   config = {
-    logging-config              = "<root>=INFO"
+    logging-config              = var.debug ? "<root>=DEBUG" : "<root>=INFO"
     update-status-hook-interval = "5m"
   }
 }
@@ -43,6 +43,7 @@ resource "juju_application" "ams" {
     use_embedded_etcd = !var.external_etcd
     snap_risk_level   = local.risk
     ua_token          = var.ubuntu_pro_token
+    log_level         = var.debug ? "debug" : "info"
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using
@@ -158,6 +159,7 @@ resource "juju_application" "agent" {
     region          = "cloud-0"
     snap_risk_level = local.risk
     ua_token        = var.ubuntu_pro_token
+    log_level       = var.debug ? "debug" : "info"
   }
 
   // FIXME: Currently the provider has some issues with reconciling state using

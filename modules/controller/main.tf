@@ -13,7 +13,7 @@ resource "juju_model" "controller" {
   constraints = join(" ", var.constraints)
 
   config = {
-    logging-config              = "<root>=INFO"
+    logging-config              = var.debug ? "<root>=DEBUG" : "<root>=INFO"
     update-status-hook-interval = "5m"
   }
 }

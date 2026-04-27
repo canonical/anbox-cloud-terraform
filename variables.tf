@@ -2,6 +2,12 @@
 // Copyright 2025 Canonical Ltd.  All rights reserved.
 //
 
+variable "enable_debug_mode" {
+  description = "Enable debug logging and charm-level debug options across all deployed applications."
+  type        = bool
+  default     = false
+}
+
 variable "base" {
   description = "Ubuntu base to use for all deployed charms and machines."
   type        = string
