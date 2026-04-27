@@ -69,6 +69,12 @@ variable "ssh_key_path" {
   default     = ""
 }
 
+variable "enable_lb" {
+  description = "Deploy an haproxy load balancer in the controller model, balancing traffic across the gateway and dashboard."
+  type        = bool
+  default     = false
+}
+
 variable "cloud_type" {
   description = "The cloud type where the Juju models are deployed. Controls cloud-specific resource configuration."
   type        = string
@@ -79,4 +85,3 @@ variable "cloud_type" {
     error_message = "cloud_type must be one of: lxd, aws."
   }
 }
-

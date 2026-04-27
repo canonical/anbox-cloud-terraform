@@ -21,3 +21,8 @@ output "dashboard_app_name" {
   value       = juju_application.dashboard.name
   description = "Anbox Cloud Dashboard application name deployed in the controller model."
 }
+
+output "lb_app_name" {
+  value       = one(juju_application.lb[*].name)
+  description = "Name of the haproxy load balancer application in the controller model. Null if enable_lb is false."
+}

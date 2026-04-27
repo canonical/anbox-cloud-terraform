@@ -26,6 +26,12 @@ variable "enable_cos" {
   default     = false
 }
 
+variable "enable_lb" {
+  description = "Deploy an haproxy load balancer in front of the gateway and dashboard."
+  type        = bool
+  default     = false
+}
+
 variable "ssh_public_key" {
   description = "SSH key to be imported in the juju models. No key is imported by default."
   type        = string

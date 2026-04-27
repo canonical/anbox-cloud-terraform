@@ -34,6 +34,7 @@ module "controller" {
   constraints      = var.constraints
   enable_ha        = var.enable_ha
   enable_cos       = var.enable_cos
+  enable_lb        = var.enable_lb
   ssh_public_key   = length(var.ssh_key_path) > 0 ? file(var.ssh_key_path) : ""
   ubuntu_pro_token = var.ubuntu_pro_token
 }
