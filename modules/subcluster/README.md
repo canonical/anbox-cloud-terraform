@@ -32,7 +32,7 @@ setup network rules properly on the lxd node.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_juju"></a> [juju](#provider\_juju) | 0.19.0 |
+| <a name="provider_juju"></a> [juju](#provider\_juju) | ~> 1.3.0 |
 
 ## Modules
 
@@ -70,8 +70,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_base"></a> [base](#input\_base) | Ubuntu base to use for deployed charms and machines. | `string` | `"ubuntu@24.04"` | no |
 | <a name="input_channel"></a> [channel](#input\_channel) | Channel for the deployed charm | `string` | `"latest/stable"` | no |
+| <a name="input_cloud_type"></a> [cloud\_type](#input\_cloud\_type) | The cloud type where the Juju model is deployed. Controls cloud-specific resource configuration. | `string` | `"lxd"` | no |
 | <a name="input_constraints"></a> [constraints](#input\_constraints) | List of constraints that need to be applied to applications. Each constraint must be of format `<constraint_name>=<constraint_value>` | `list(string)` | `[]` | no |
+| <a name="input_debug"></a> [debug](#input\_debug) | Enable debug logging and charm-level debug options across all deployed applications. | `bool` | `false` | no |
 | <a name="input_enable_cos"></a> [enable\_cos](#input\_enable\_cos) | Enable cos integration by deploying grafana-agent charm. | `bool` | `false` | no |
 | <a name="input_enable_ha"></a> [enable\_ha](#input\_enable\_ha) | Number of lxd nodes to deploy per subcluster | `bool` | `false` | no |
 | <a name="input_external_etcd"></a> [external\_etcd](#input\_external\_etcd) | Channel for the deployed charm | `bool` | `false` | no |

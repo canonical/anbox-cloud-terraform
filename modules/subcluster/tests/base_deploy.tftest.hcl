@@ -139,7 +139,7 @@ run "test_registry" {
   command = plan
   variables {
     model_suffix    = "a"
-    registry_config = { mode = "client", offer_url = "client_url" }
+    registry_config = { mode = "client", offer_url = "admin/anbox-registry.aar" }
   }
   assert {
     condition     = length(juju_integration.ams_aar) > 0
