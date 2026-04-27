@@ -241,3 +241,99 @@ resource "juju_machine" "controller_node" {
   name        = "anbox-controller-${count.index}"
   constraints = join(" ", var.constraints)
 }
+
+resource "juju_application" "lb" {
+  count = var.enable_lb ? 1 : 0
+  name  = "anbox-stream-gateway-lb"
+
+  model_uuid  = juju_model.controller.uuid
+  constraints = join(" ", var.constraints)
+
+  charm {
+    name    = "haproxy"
+    channel = "latest/stable"
+    base    = local.base
+  }
+
+  machines = [juju_machine.controller_node[0].machine_id]
+
+  expose {}
+
+  config = {
+    default_mode = "tcp"
+    peering_mode = "active-active"
+    ssl_cert     = "SELFSIGNED"
+    ssl_key      = "SELFSIGNED"
+    services     = <<-HAPROXY
+      - service_name: app-anbox-stream-gateway
+        service_host: "0.0.0.0"
+        service_port: 8080
+        service_options:
+        - mode http
+        server_options: check ssl verify none inter 2000 rise 2 fall 5 maxconn 4096
+        crts: [DEFAULT]
+      - service_name: app-anbox-cloud-dashboard
+        service_host: "0.0.0.0"
+        service_port: 8081
+        service_options:
+        - mode http
+        server_options: check ssl verify none inter 2000 rise 2 fall 5 maxconn 4096
+        crts: [DEFAULT]
+      - service_name: api_http
+        service_host: "0.0.0.0"
+        service_port: 80
+        service_options:
+        - mode http
+        - http-request redirect scheme https
+      - service_name: api_https
+        service_host: "0.0.0.0"
+        service_port: 443
+        service_options:
+        - mode http
+        - balance leastconn
+        - acl path_start_api path_beg -i /1.0
+        - acl path_start_ui path_beg -i /ui
+        - use_backend app-anbox-stream-gateway if path_start_api
+        - use_backend app-anbox-stream-gateway if path_start_ui
+        - default_backend app-anbox-cloud-dashboard
+        crts: [DEFAULT]
+      HAPROXY
+  }
+
+  // FIXME: Currently the provider has some issues with reconciling state using
+  // the response from the JUJU APIs. This is done just to ignore the changes in
+  // string values returned.
+  lifecycle {
+    ignore_changes = [constraints]
+  }
+}
+
+resource "juju_integration" "gateway_lb" {
+  count      = var.enable_lb ? 1 : 0
+  model_uuid = juju_model.controller.uuid
+
+  application {
+    name     = juju_application.gateway.name
+    endpoint = "api"
+  }
+
+  application {
+    name     = one(juju_application.lb[*].name)
+    endpoint = "reverseproxy"
+  }
+}
+
+resource "juju_integration" "dashboard_lb" {
+  count      = var.enable_lb ? 1 : 0
+  model_uuid = juju_model.controller.uuid
+
+  application {
+    name     = juju_application.dashboard.name
+    endpoint = "reverseproxy"
+  }
+
+  application {
+    name     = one(juju_application.lb[*].name)
+    endpoint = "reverseproxy"
+  }
+}
