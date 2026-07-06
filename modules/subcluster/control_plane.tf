@@ -293,7 +293,7 @@ resource "juju_application" "cos_agent" {
   model_uuid = juju_model.subcluster.uuid
 
   charm {
-    name = "grafana-agent"
+    name = "opentelemetry-collector"
     base = var.base
   }
 
