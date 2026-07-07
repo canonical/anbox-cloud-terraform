@@ -117,7 +117,7 @@ resource "juju_application" "ca" {
   charm {
     name    = "self-signed-certificates"
     base    = var.base
-    channel = "latest/stable"
+    channel = "1/stable"
   }
 
   machines = juju_machine.controller_node[*].machine_id

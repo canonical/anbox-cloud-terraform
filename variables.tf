@@ -17,7 +17,7 @@ variable "enable_debug_mode" {
 variable "base" {
   description = "Ubuntu base to use for all deployed charms and machines."
   type        = string
-  default     = "ubuntu@22.04"
+  default     = "ubuntu@24.04"
 }
 
 variable "constraints" {
