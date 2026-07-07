@@ -84,7 +84,7 @@ resource "juju_application" "ca" {
 
   charm {
     name    = "self-signed-certificates"
-    channel = "latest/stable"
+    channel = "1/stable"
     base    = var.base
   }
 
