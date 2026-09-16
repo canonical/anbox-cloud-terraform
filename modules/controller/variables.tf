@@ -61,3 +61,15 @@ variable "ubuntu_pro_token" {
   type        = string
   default     = ""
 }
+
+variable "root_ca_validity" {
+  description = "RootCA certificate validity."
+  type        = string
+  default     = "730d"
+}
+
+variable "certificate_validity" {
+  description = "Certificate validity."
+  type        = string
+  default     = "365d"
+}

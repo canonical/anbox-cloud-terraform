@@ -88,6 +88,11 @@ resource "juju_application" "ca" {
     base    = var.base
   }
 
+  config = {
+    root-ca-validity     = var.root_ca_validity
+    certificate-validity = var.certificate_validity
+  }
+
   machines = juju_machine.ams_node[*].machine_id
 }
 
