@@ -120,6 +120,11 @@ resource "juju_application" "ca" {
     channel = "1/stable"
   }
 
+  config = {
+    root-ca-validity     = var.root_ca_validity
+    certificate-validity = var.certificate_validity
+  }
+
   machines = juju_machine.controller_node[*].machine_id
 
   // FIXME: Currently the provider has some issues with reconciling state using

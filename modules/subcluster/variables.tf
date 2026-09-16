@@ -87,3 +87,14 @@ variable "cloud_type" {
   }
 }
 
+variable "root_ca_validity" {
+  description = "RootCA certificate validity."
+  type        = string
+  default     = "730d"
+}
+
+variable "certificate_validity" {
+  description = "Certificate validity."
+  type        = string
+  default     = "365d"
+}
